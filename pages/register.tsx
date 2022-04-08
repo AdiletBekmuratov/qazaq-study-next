@@ -1,7 +1,50 @@
+import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
 import { NextPage } from 'next'
 import Link from 'next/link'
+import * as Yup from 'yup'
+import PhoneInput from 'react-phone-input-2'
+
+const SignUpSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Must be a valid email')
+    .max(255)
+    .required('Required field'),
+  name: Yup.string()
+    .required('Required field')
+    .min(1, 'Too short input'),
+  phone: Yup.string().required('Required field'),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      'The password must contain at least 8 characters, one upper case, one lower case, one number and one special case character'
+    )
+    .required('Required field'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords don\'t match')
+    .required('Required field'),
+})
+
+interface FormValues {
+  email: string
+  name: string
+  phone: string
+  password: string
+  confirmPassword: string
+}
+
+const initialValues: FormValues = {
+  email: '',
+  name: '',
+  phone: '',
+  password: '',
+  confirmPassword: '',
+}
 
 const register: NextPage = () => {
+  const handleSubmit = (values: FormValues) => {
+    console.log(values)
+  }
+
   return (
     <section className="relative flex min-h-screen ">
       <div className="flex min-w-0 flex-auto flex-col items-center bg-white sm:flex-row sm:justify-center md:items-start md:justify-start">
@@ -13,45 +56,118 @@ const register: NextPage = () => {
                 Sign up to become a part of our community
               </p>
             </div>
-            <form className="mt-8 space-y-6" action="#" method="POST">
-              <div className="relative">
-                <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
-                  Email
-                </label>
-                <input
-                  className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
-                  type="email"
-                  placeholder="mail@example.com"
-                />
-              </div>
-              <div className="mt-8 content-center">
-                <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
-                  Password
-                </label>
-                <input
-                  className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
-                  type="password"
-                  placeholder="Enter your password"
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full cursor-pointer justify-center rounded-md bg-dark-blue p-4 
-									font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
-                >
-                  Sign up
-                </button>
-              </div>
-              <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
-                <span>Already have an account?</span>
-                <Link href={'/login'}>
-                  <a className="cursor-pointer text-dark-blue no-underline transition duration-300 ease-in-out hover:text-light-blue">
-                    Sign in
-                  </a>
-                </Link>
-              </p>
-            </form>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              validationSchema={SignUpSchema}
+            >
+              {(props: FormikProps<FormValues>) => (
+                <Form className="mt-8 space-y-6" action="#" method="POST">
+                  <div className="relative">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      Email
+                    </label>
+                    <Field
+                      name="email"
+                      className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                      type="email"
+                      placeholder="mail@example.com"
+                    />
+                    <ErrorMessage
+                      name="email"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
+                    />
+                  </div>
+                  <div className="mt-8 content-center">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      Name
+                    </label>
+                    <Field
+                      name="name"
+                      className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                      type="text"
+                      placeholder="Enter your name"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
+                    />
+                  </div>
+                  <div className="mt-8 content-center">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      Phone
+                    </label>
+                    <Field
+                      name="phone"
+                      inputClass="focus:shadow "
+                      type="text"
+                      placeholder="Enter your phone number"
+											preferredCountries={['us', 'ru', 'kz']}
+											country={'kz'}
+											onChange={(_: any, __: any, ___: any, formattedValue: any) => props.setFieldValue('phone', formattedValue)}
+											component={PhoneInput}
+											disableCountryGuess={true}
+                    />
+                    <ErrorMessage
+                      name="phone"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
+                    />
+                  </div>
+                  <div className="mt-8 content-center">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      Password
+                    </label>
+                    <Field
+                      name="password"
+                      className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                      type="password"
+                      placeholder="Enter your password"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
+                    />
+                  </div>
+                  <div className="mt-8 content-center">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      Password Confirmation
+                    </label>
+                    <Field
+                      name="confirmPassword"
+                      className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                      type="password"
+                      placeholder="Confirm your password"
+                    />
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      className="ripple flex w-full cursor-pointer justify-center rounded-md bg-dark-blue p-4 
+											font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                  <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
+                    <span>Already have an account?</span>
+                    <Link href={'/login'}>
+                      <a className="cursor-pointer text-dark-blue no-underline transition duration-300 ease-in-out hover:text-light-blue">
+                        Sign in
+                      </a>
+                    </Link>
+                  </p>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
 
