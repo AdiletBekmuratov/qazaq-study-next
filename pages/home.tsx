@@ -1,7 +1,7 @@
-import Footer from '@/components/Footer'
+import ContactUs from '@/components/ContactUs'
+import MobileApp from '@/components/MobileApp'
 import Navbar from '@/components/Navbar'
 import { NextPage } from 'next'
-import React from 'react'
 const home: NextPage = () => {
   return (
     <>
@@ -31,7 +31,8 @@ const home: NextPage = () => {
         </div>
       </section>
 
-      <Footer />
+      <MobileApp />
+      <ContactUs />
     </>
   )
 }
