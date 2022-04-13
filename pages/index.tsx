@@ -1,85 +1,93 @@
+import ContactUs from '@/components/ContactUs'
+import Footer from '@/components/Footer'
+import MobileApp from '@/components/MobileApp'
+import Navbar from '@/components/Navbar'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <main>
+        <Navbar />
+        <section className="relative z-10 w-full">
+          <div className="sec-1">
+            <div className="gird-cols-1 container relative mx-auto grid items-center justify-center px-5 py-24 md:grid-cols-2">
+              <div className="flex items-center">
+                <img
+                  className="w-full rounded object-cover"
+                  src="/images/adilet.png"
+                  alt="adilet hero"
+                />
+              </div>
+              <div className="grid grid-cols-1 items-start justify-start gap-5">
+                <h1 className="text-xl font-bold sm:text-4xl md:text-6xl">
+                  The Way Of <br />
+                  Learning Kazakh As <br />
+                  Unique As You Are
+                </h1>
+                <p className="text-base sm:text-2xl">
+                  Finally, learning a new language has become <br />
+                  accessible, interesting, convenient and memorable!
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+        <section className="gird-cols-1 container mx-auto grid justify-center justify-items-center px-5 py-24 xl:grid-cols-2">
+          <div className="md:w-6/8 flex w-4/6 items-center">
+            <img
+              className="w-full rounded object-cover"
+              src="/images/anel.png"
+              alt="anel letaet"
+            />
+          </div>
+          <div className="mt-20 w-8/12">
+            <div className="">
+              <h1 className="text-xl font-semibold sm:text-4xl md:text-4xl">
+                Track your progress
+              </h1>
+              <div className="mt-5 w-10/12">
+                <p className="text-base sm:text-xl">
+                  Learn new meaning every day and track your proggress bar in
+                  profile.
+                </p>
+              </div>
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
+              <h1 className="mt-8 text-xl font-semibold sm:text-4xl md:text-4xl">
+                Remember
+              </h1>
+              <div className="mt-5 w-10/12">
+                <p className="text-base sm:text-xl">
+                  Sign up and save your favourite words and check the learned
+                  ones.
+                </p>
+              </div>
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="mt-8 flex w-full cursor-pointer justify-center rounded-md bg-dark-blue 
+									p-4 font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
+              >
+                REGISTER
+              </button>
+            </div>
+          </div>
+        </section>
 
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+        <MobileApp />
+        <ContactUs />
 
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <Footer />
       </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
-    </div>
+    </>
   )
 }
 

@@ -1,5 +1,6 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import 'react-phone-input-2/lib/style.css'
+import '../styles/globals.css'
 const {
   AnimatePresence,
   domAnimation,

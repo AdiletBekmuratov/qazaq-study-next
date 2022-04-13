@@ -1,15 +1,44 @@
+import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
 import { NextPage } from 'next'
-import Link from 'next/link'
 import Head from 'next/head'
+import Link from 'next/link'
+import * as Yup from 'yup'
+
+const SignInSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Must be a valid email')
+    .max(255)
+    .required('Required field'),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      'The password must contain at least 8 characters, one upper case, one lower case, one number and one special case character'
+    )
+    .required('Required field'),
+})
+
+interface FormValues {
+  email: string
+  password: string
+}
+
+const initialValues: FormValues = {
+  email: '',
+  password: '',
+}
 
 const login: NextPage = () => {
+  const handleSubmit = (values: FormValues) => {
+    console.log(values)
+  }
+
   return (
     <>
       <Head>
         <title>Login | Qazaq Study</title>
-        <meta name='description' content='Qazaq Study Login Page' />
+        <meta name="description" content="Qazaq Study - Login Page" />
       </Head>
-      <section className="relative flex min-h-screen ">
+      <section className="relative flex min-h-screen">
         <div className="flex min-w-0 flex-auto flex-col items-center bg-white sm:flex-row sm:justify-center md:items-start md:justify-start">
           <div
             className="relative hidden h-full flex-auto items-center justify-center overflow-hidden bg-dark-blue bg-cover bg-no-repeat p-10 text-white sm:w-1/2 md:flex xl:w-3/5"
@@ -55,61 +84,80 @@ const login: NextPage = () => {
                   Please sign in to your account
                 </p>
               </div>
-              <form className="mt-8 space-y-6" action="#" method="POST">
-                <div className="relative">
-                  <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
-                    Email
-                  </label>
-                  <input
-                    className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
-                    type="email"
-                    placeholder="mail@example.com"
-                  />
-                </div>
-                <div className="mt-8 content-center">
-                  <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
-                    Password
-                  </label>
-                  <input
-                    className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
-                    type="password"
-                    placeholder="Enter your password"
-                  />
-                </div>
-                <div className="flex items-center justify-end">
-                  <div className="text-sm">
-                    <a
-                      href="#"
-                      className="text-dark-blue transition duration-300 ease-in-out hover:text-light-blue"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    className="flex w-full cursor-pointer justify-center rounded-md bg-dark-blue p-4 
-									font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
-                  >
-                    Sign in
-                  </button>
-                </div>
-                <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
-                  <span>Don't have an account?</span>
-                  <Link href={'/register'}>
-                    <a className="cursor-pointer text-dark-blue no-underline transition duration-300 ease-in-out hover:text-light-blue">
-                      Sign up
-                    </a>
-                  </Link>
-                </p>
-              </form>
+              <Formik
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validationSchema={SignInSchema}
+              >
+                {(props: FormikProps<FormValues>) => (
+                  <Form className="mt-8 space-y-6" action="#" method="POST">
+                    <div className="relative">
+                      <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                        Email
+                      </label>
+                      <Field
+                        name="email"
+                        className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                        type="email"
+                        placeholder="mail@example.com"
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component={'div'}
+                        className="mt-1 ml-3 text-sm text-red-400"
+                      />
+                    </div>
+                    <div className="mt-8 content-center">
+                      <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                        Password
+                      </label>
+                      <Field
+                        name="password"
+                        className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                        type="password"
+                        placeholder="Enter your password"
+                      />
+                      <ErrorMessage
+                        name="password"
+                        component={'div'}
+                        className="mt-1 ml-3 text-sm text-red-400"
+                      />
+                    </div>
+                    <div className="flex items-center justify-end">
+                      <div className="text-sm">
+                        <a
+                          href="#"
+                          className="text-dark-blue transition duration-300 ease-in-out hover:text-light-blue"
+                        >
+                          Forgot your password?
+                        </a>
+                      </div>
+                    </div>
+                    <div>
+                      <button
+                        type="submit"
+                        className="ripple flex w-full cursor-pointer justify-center rounded-md bg-dark-blue p-4 
+											font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
+                      >
+                        Sign in
+                      </button>
+                    </div>
+                    <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
+                      <span>Don't have an account?</span>
+                      <Link href={'/register'}>
+                        <a className="cursor-pointer text-dark-blue no-underline transition duration-300 ease-in-out hover:text-light-blue">
+                          Sign up
+                        </a>
+                      </Link>
+                    </p>
+                  </Form>
+                )}
+              </Formik>
             </div>
           </div>
         </div>
       </section>
     </>
-
   )
 }
 
