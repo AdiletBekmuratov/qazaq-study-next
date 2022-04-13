@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <nav className="rounded border-gray-200 border bg-white text-gray-700 px-2 py-5 sm:px-4 shadow">
+    <nav className="rounded border border-gray-200 bg-white py-5 px-5 text-gray-700 shadow">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <a href="https://flowbite.com" className="flex items-center">
           <span className="self-center whitespace-nowrap text-xl font-semibold">

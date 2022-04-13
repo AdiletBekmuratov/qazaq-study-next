@@ -31,6 +31,48 @@ const home: NextPage = () => {
         </div>
       </section>
 
+      <section className="gird-cols-1 container mx-auto grid justify-center justify-items-center px-5 py-24 xl:grid-cols-2">
+        <div className="md:w-6/8 flex w-4/6 items-center">
+          <img
+            className="w-full rounded object-cover"
+            src="/images/anel.png"
+            alt="anel letaet"
+          />
+        </div>
+        <div className="mt-20 w-8/12">
+          <div className="">
+            <h1 className="text-xl font-semibold sm:text-4xl md:text-4xl">
+              Track your progress
+            </h1>
+            <div className="mt-5 w-10/12">
+              <p className="text-base sm:text-xl">
+                Learn new meaning every day and track your proggress bar in
+                profile.
+              </p>
+            </div>
+
+            <h1 className="mt-8 text-xl font-semibold sm:text-4xl md:text-4xl">
+              Remember
+            </h1>
+            <div className="mt-5 w-10/12">
+              <p className="text-base sm:text-xl">
+                Sign up and save your favourite words and check the learned
+                ones.
+              </p>
+            </div>
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="mt-8 flex w-full cursor-pointer justify-center rounded-md bg-dark-blue 
+									p-4 font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
+            >
+              REGISTER
+            </button>
+          </div>
+        </div>
+      </section>
+
       <MobileApp />
       <ContactUs />
     </>
