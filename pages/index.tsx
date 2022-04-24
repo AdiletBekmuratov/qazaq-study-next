@@ -4,6 +4,7 @@ import MobileApp from '@/components/MobileApp'
 import Navbar from '@/components/Navbar'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Tools from '@/components/Tools'  
 import Image from 'next/image'
 
 const Home: NextPage = () => {
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
         <Navbar />
         <section className="relative z-10 w-full">
           <div className="sec-1">
-            <div className="gird-cols-1 container relative mx-auto grid items-center justify-center px-5 py-24 md:grid-cols-2">
+            <div className="grid-cols-1 container relative mx-auto grid items-center justify-center px-5 py-24 md:grid-cols-2">
               <div className="flex items-center">
                 <img
                   className="w-full rounded object-cover"
@@ -34,11 +35,13 @@ const Home: NextPage = () => {
                 <p className="text-base sm:text-2xl">
                   Finally, learning a new language has become <br />
                   accessible, interesting, convenient and memorable!
-                </p>
+                </p>  
               </div>
             </div>
           </div>
         </section>
+
+        <Tools />
 
         <section className="gird-cols-1 container mx-auto grid justify-center justify-items-center px-5 py-24 xl:grid-cols-2">
           <div className="md:w-6/8 flex w-4/6 items-center">

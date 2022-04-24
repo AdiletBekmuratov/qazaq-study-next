@@ -19,7 +19,7 @@ const MobileApp = () => {
 						</Link>
 					</div>
 					<div className='md: mt-8'>
-						<img className='w-80' src="/images/adilet2.png" />
+						<img className='w-48' src="/images/adilet2.png" />
 					</div>
 				</div>
 			</section>
