@@ -76,6 +76,25 @@ const profile_edit: NextPage = () => {
 										/>
 									</div>
 
+									<div className='col-span-6 bg-gray-300 h-px '></div>
+
+									<div className="col-span-6">
+										<div className="py-2 rounded-lg shadow-xl bg-gray-50 lg:w-2/3">
+											<div className="m-4">
+												<div className="flex items-center justify-center w-full">
+													<label className="flex flex-col w-full h-24 border-4 border-dashed hover:bg-gray-100 hover:border-gray-300">
+														<div className="flex flex-col items-center justify-center pt-4">
+
+															<p className="text-xl tracking-wider text-center text-gray-400 group-hover:text-gray-600">
+																<span className='text-black'> Click to upload</span> new <br />profile photo</p>
+														</div>
+														<input type="file" className="opacity-0" />
+													</label>
+												</div>
+											</div>
+
+										</div>
+									</div>
 									<div className='col-span-6 bg-gray-300 h-px'></div>
 									<div className="col-span-6 sm:col-span-4">
 										<label htmlFor="phone-number" className="block text-lg font-bold text-black">

@@ -3,7 +3,6 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { NextPage } from 'next'
-import MiniCard from '@/components/MiniCard'
 import { BsFillSuitHeartFill, BsFillCheckCircleFill } from 'react-icons/bs'
 
 const profile: NextPage = () => {
@@ -67,33 +66,5 @@ const profile: NextPage = () => {
 	)
 }
 
-
-// <section className='w-full'>
-// <div className='container px-24 mx-auto py-24 flex justify-between '>
-// 	<div className='w-3/4 grid grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-3 md:gap-10 '>
-// 		<div className=''> 
-// 			<img className='rounded-full' width={280} height={280} src={'/images/profileAnel.png'} />
-// 		</div>
-// 		<div className=''>
-// 			<h3>Anel Amanbekova</h3>
-// 			<h3>Advanced</h3>
-// 		</div>
-// 		<div className=''>
-// 			<div className=''>
-// 				<h5>anelnjk@gmail.com</h5>
-// 				<h5>+7 (707) 818 8186</h5>
-// 				<h5>Nur-Sultan, KZ</h5>
-// 			</div>
-// 		</div>
-// 	</div>
-// 	<div className='w-1/4 flex justify-end items-center'>
-// 		<Link href={""}>
-// 			<a className='border rounded-lg bg-dark-blue px-10 py-3 text-xl text-white '>
-// 				CHANGE
-// 			</a>
-// 		</Link>
-// 	</div>
-// </div>
-// </section>
 
 export default profile

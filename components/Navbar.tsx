@@ -2,11 +2,11 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <nav className="rounded border border-gray-200 bg-white py-5 px-5 text-gray-700 shadow">
-      <div className="container mx-auto flex flex-wrap items-center justify-between">
-        <a href="https://flowbite.com" className="flex items-center">
+    <nav className=" bg-dark-blue py-5 px-5 text-white shadow">
+      <div className="container px-24 mx-auto flex flex-wrap items-center justify-between">
+        <a href="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-xl font-semibold">
-            Flowbite
+            QStudy
           </span>
         </a>
         <button
@@ -46,43 +46,43 @@ const Navbar = () => {
           <ul className="mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium">
             <li>
               <a
-                href="#"
+                href="/translator"
                 className="block rounded bg-blue-700 py-2 pr-4 pl-3 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700"
                 aria-current="page"
               >
-                Home
+                Translator
+              </a>
+            </li>
+            <li>
+              <a
+                href="/vocabulary"
+                className="block border-b border-gray-100 py-2 pr-4 pl-3 text-white hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+              >
+                Vocabulary Cards
               </a>
             </li>
             <li>
               <a
                 href="#"
-                className="block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                className="block border-b border-gray-100 py-2 pr-4 pl-3 text-white hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
               >
-                About
+                Quiz
               </a>
             </li>
             <li>
               <a
                 href="#"
-                className="block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                className="block border-b border-gray-100 py-2 pr-4 pl-3 text-white hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
               >
-                Services
+                Support
               </a>
             </li>
             <li>
               <a
-                href="#"
-                className="block border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                href="/profile"
+                className="block py-2 pr-4 pl-3 text-white hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
               >
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
-              >
-                Contact
+                Profile
               </a>
             </li>
           </ul>
