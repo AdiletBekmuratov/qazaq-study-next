@@ -27,7 +27,7 @@ const initialValues: FormValues = {
   password: '',
 }
 
-const login: NextPage = () => {
+const Login: NextPage = () => {
   const handleSubmit = (values: FormValues) => {
     console.log(values)
   }
@@ -161,4 +161,4 @@ const login: NextPage = () => {
   )
 }
 
-export default login
+export default Login

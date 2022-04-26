@@ -39,7 +39,7 @@ const initialValues: FormValues = {
   confirmPassword: '',
 }
 
-const register: NextPage = () => {
+const Register: NextPage = () => {
   const handleSubmit = (values: FormValues) => {
     console.log(values)
   }
@@ -222,4 +222,4 @@ const register: NextPage = () => {
   )
 }
 
-export default register
+export default Register

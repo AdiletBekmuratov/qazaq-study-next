@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="body-font text-white bg-custom-yellow">
+    <footer className="body-font bg-custom-yellow text-white">
       <div className="container mx-auto flex flex-col flex-wrap px-5 py-24 md:flex-row md:flex-nowrap md:items-center lg:items-start">
         <div className="mx-auto w-64 flex-shrink-0 text-center md:mx-0 md:text-left">
           <a className="title-font flex items-center justify-center font-medium md:justify-start">
@@ -98,7 +98,7 @@ const Footer = () => {
             <a
               href="https://twitter.com/knyttneve"
               rel="noopener noreferrer"
-              className="ml-1" 
+              className="ml-1"
               target="_blank"
             >
               @se_2011_

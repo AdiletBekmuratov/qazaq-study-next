@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import 'react-phone-input-2/lib/style.css'
 import '../styles/globals.css'
 const {
@@ -19,20 +20,25 @@ const animation = {
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
-    <LazyMotion features={domAnimation}>
-      <AnimatePresence exitBeforeEnter initial={false}>
-        <m.div
-          key={router.route}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          variants={animation.variants}
-          transition={animation.transition}
-        >
-          <Component {...pageProps} />
-        </m.div>
-      </AnimatePresence>
-    </LazyMotion>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <m.div
+            key={router.route}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={animation.variants}
+            transition={animation.transition}
+          >
+            <Component {...pageProps} />
+          </m.div>
+        </AnimatePresence>
+      </LazyMotion>
+    </>
   )
 }
 
