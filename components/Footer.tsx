@@ -1,96 +1,69 @@
 import React from 'react'
+import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <footer className="body-font bg-custom-yellow text-white">
-      <div className="container mx-auto flex flex-col flex-wrap px-5 py-24 md:flex-row md:flex-nowrap md:items-center lg:items-start">
-        <div className="mx-auto w-64 flex-shrink-0 text-center md:mx-0 md:text-left">
-          <a className="title-font flex items-center justify-center font-medium md:justify-start">
-            <span className="text-xl">Qazaq Study</span>
-          </a>
-          <p className="mt-2 text-sm">
-            Air plant banjo lyft occupy retro adaptogen indego
-          </p>
-        </div>
-        <div className="-mb-10 mt-10 flex flex-grow flex-wrap text-center md:mt-0 md:pl-20 md:text-left">
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <h2 className="title-font mb-3 text-sm font-medium tracking-widest">
-              CATEGORIES
-            </h2>
-            <nav className="mb-10 list-none">
-              <li>
-                <a className="hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
+    <footer className="body-font">
+      <div className='hidden sm:block bg-custom-yellow text-white'>
+        <div className="container mx-auto flex flex-row space-x-12 px-5 py-16">
+          <div className="w-full lg:w-1/2">
+            <Link href={"#"}>
+              <a className='text-3xl font-semibold'>
+                Qazaq Study
+              </a>
+            </Link>
+            
+            <p className="text-md w-full xl:w-1/2 mt-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis incidunt saepe nostrum excepturi tempora impedit neque nam blanditiis ipsa officiis ad, error id voluptas optio aliquam necessitatibus praesentium tempore eos.
+            </p>
           </div>
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <h2 className="title-font mb-3 text-sm font-medium tracking-widest">
-              CATEGORIES
-            </h2>
-            <nav className="mb-10 list-none">
-              <li>
-                <a className="hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <h2 className="title-font mb-3 text-sm font-medium tracking-widest">
-              CATEGORIES
-            </h2>
-            <nav className="mb-10 list-none">
-              <li>
-                <a className="hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <h2 className="title-font mb-3 text-sm font-medium tracking-widest">
-              CATEGORIES
-            </h2>
-            <nav className="mb-10 list-none">
-              <li>
-                <a className="hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a className="hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
+          <div className="w-full lg:w-1/2 flex justify-end justify-items-center space-x-12 lg:space-x-36">
+            <div className="">
+              <h2 className="text-2xl font-medium">
+                Sitemap
+              </h2>
+              <nav className="list-none mt-2">
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">About Us</a>
+                </li>
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">Cards</a>
+                </li>
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">Quiz</a>
+                </li>
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">Translator</a>
+                </li>
+              </nav>
+            </div>
+            <div className="">
+              <h2 className="text-2xl font-medium">
+                Contact Us
+              </h2>
+              <nav className="list-none mt-2">
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">QStudy@ex.com
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">+7 777 777 7777
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">+7 707 777 7777
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-gray-800 text-md md:text-lg">Nur-Sultan</a>
+                </li>
+              </nav>
+            </div>
+
           </div>
         </div>
       </div>
+
       <div className="bg-dark-blue text-white">
         <div className="container mx-auto flex flex-col flex-wrap py-4 px-5 sm:flex-row">
           <p className="text-center text-sm  sm:text-left">

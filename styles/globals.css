@@ -208,3 +208,40 @@
   right: 0;
   bottom: -100px;
 }
+
+.sec-2::after {
+  content: url('/images/sec2-cicles.svg');
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  top: -70px;
+}
+
+
+.sec-3::after {
+  content: url('/images/sec3-cicles.svg');
+  z-index: -1;
+  position: absolute;
+  right: 0;
+  bottom: -160px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .sec-3::after {
+      display:none;
+  }
+  .sec-2::after {
+    width: 100px;
+}
+}
+
+@media only screen and (max-width: 400px) {
+  .sec-2::after {
+      display: none;
+  } 
+}
+
+.textarea-translator[contentEditable]:empty::before {
+  content: "Type here!";
+  
+}

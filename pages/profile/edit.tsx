@@ -11,7 +11,7 @@ const ProfileEdit: NextPage = () => {
       <section className="w-full">
         <div className="container mx-auto grid grid-cols-1 items-center gap-y-10 px-12 py-16 md:px-20 lg:grid-cols-2">
           <div className="flex flex-col items-center space-x-12 space-y-4 md:flex-row ">
-            <img className="rounded-full" src={'/images/profileAnel.png'} />
+            <img className="aspect-square w-36 rounded-full" src={'/images/profileAnel.png'} />
             <div className="">
               <h3>Anel Amanbekova</h3>
               <h3 className="text-light-blue">Advanced</h3>
@@ -19,12 +19,12 @@ const ProfileEdit: NextPage = () => {
           </div>
           <div className="flex items-center justify-center space-x-6 md:justify-end">
             <Link href={'/profile'}>
-              <a className="rounded-lg border bg-white px-6 py-2 text-xl text-black md:px-10 md:py-3 ">
+              <a className="rounded-lg border hover:text-white bg-white px-6 py-2.5 ripple text-black md:px-10 ">
                 CANCEL
               </a>
             </Link>
             <Link href={'/profile'}>
-              <a className="rounded-lg border bg-dark-blue px-8 py-2 text-xl text-white  md:px-14 md:py-3 ">
+              <a className="rounded-lg border bg-dark-blue px-8 py-2.5 ripple text-white  md:px-14">
                 SAVE
               </a>
             </Link>
@@ -196,7 +196,7 @@ const ProfileEdit: NextPage = () => {
               </div>
               <div className="mb-5 px-4 py-3 text-left sm:px-6">
                 <Link href={''}>
-                  <a className="rounded-lg border bg-dark-blue px-8 py-2 text-xl text-white md:px-14 md:py-3">
+                  <a className="rounded-lg border bg-dark-blue px-8 py-2 ripple text-white md:px-14 md:py-3">
                     UPDATE PASSWORD
                   </a>
                 </Link>
