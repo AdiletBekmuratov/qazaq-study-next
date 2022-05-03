@@ -1,50 +1,39 @@
+import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 async function refreshAccessToken(token) {
   try {
-    const payload = {
-      refresh_token: token.refreshToken,
-    }
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/authentication/refreshToken`
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token.refreshToken}`,
+        },
+      }
+    )
 
-    console.log('Payload', { payload })
-
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`
-    const response = await fetch(url, {
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-
-    const refreshedTokens = await response.json()
+    const refreshedTokens = response.data
 
     console.log('Refresh', { refreshedTokens })
 
-    if (refreshedTokens?.errors) {
-      console.log(refreshedTokens?.errors[0])
-    }
-
-    const userData = await getCurrentUser(refreshedTokens.data.access_token)
-    const addition = {
-      email: userData.email,
-      role: userData.role,
-      groupId: userData.group,
-      id: userData.id,
-    }
+    const decodedAccess = jwt_decode(refreshedTokens.accessToken)
+    console.log({ decodedAccess })
 
     let newToken = {
-      accessTokenExpires: Date.now() + refreshedTokens.data.expires,
-      accessToken: refreshedTokens.data.access_token,
-      refreshToken: refreshedTokens.data.refresh_token,
+      ...refreshedTokens,
+      accessTokenExpires: decodedAccess.exp * 1000,
+      roles: decodedJwt.roles,
+      refreshToken: token.refreshToken,
     }
 
     console.log('NEW_TOKEN', { newToken })
 
     return {
       ...newToken,
-      ...addition,
     }
   } catch (error) {
     console.log('error', error)
@@ -60,51 +49,38 @@ const options = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
-      async authorize(credentials) {
+      credentials: null,
+      async authorize(credentials, _req) {
         try {
           const payload = {
-            email: credentials.email,
-            password: credentials.password,
+            username: credentials?.username,
+            password: credentials?.password,
           }
 
-          console.log('Payload', { payload })
+          console.log('Login Payload', { payload })
 
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-            {
-              method: 'POST',
-              body: JSON.stringify(payload),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/authentication/login`,
+            payload
           )
 
-          const tokenData = await res.json()
-          if (!res.ok) {
-            if (
-              tokenData?.errors[0]?.extensions?.code === 'INVALID_CREDENTIALS'
-            ) {
-              throw new Error('Неверный Email или пароль')
-            }
-            throw new Error(tokenData?.errors[0]?.message)
-          }
-          if (tokenData?.data?.access_token) {
-            const userData = await getCurrentUser(tokenData?.data?.access_token)
-            console.log('NEXT_USER', { userData })
-            const addition = {
-              email: userData.email,
-              role: userData.role,
-              groupId: userData.group,
-              id: userData.id,
-            }
+          const tokenData = response.data
 
-            return { ...tokenData.data, ...addition }
+          if (tokenData?.accessToken) {
+            const decodedJwt = jwt_decode(tokenData?.accessToken)
+            const returnData = {
+              ...tokenData,
+              accessTokenExpires: decodedJwt.exp * 1000,
+              roles: decodedJwt.roles,
+            }
+            console.log({ returnData })
+            return returnData
           }
 
           return null
         } catch (error) {
-          throw new Error(error)
+          console.log(error)
+          return null
         }
       },
     }),
@@ -112,12 +88,13 @@ const options = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        token.accessToken = user.access_token
-        token.accessTokenExpires = Date.now() + user.expires
-        token.refreshToken = user.refresh_token
-        token.email = user.email
-        token.role = user.role
-        token.groupId = user.groupId
+        console.log({ user })
+
+        token.accessToken = user.accessToken
+        token.accessTokenExpires = user.accessTokenExpires
+        token.refreshToken = user.refreshToken
+        token.username = user.username
+        token.roles = user.roles
         token.id = user.id
       }
 
@@ -133,11 +110,10 @@ const options = {
     },
 
     async session({ session, token }) {
-      session.user.email = token.email
-
       session.user.accessToken = token.accessToken
-      session.expires = token.accessTokenExpires
-      session.user.groupId = token.groupId
+      session.user.accessTokenExpires = token.accessTokenExpires
+      session.user.username = token.username
+      session.user.roles = token.roles
       session.user.id = token.id
       session.error = token?.error
       return Promise.resolve(session)

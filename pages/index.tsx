@@ -2,6 +2,7 @@ import ContactUs from '@/components/ContactUs'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { AiFillSound } from 'react-icons/ai'
@@ -9,6 +10,9 @@ import { BsArrowLeftRight, BsCheckCircleFill } from 'react-icons/bs'
 import { ImBooks } from 'react-icons/im'
 
 const Home: NextPage = () => {
+  const { data: session, status } = useSession()
+  console.log(session)
+
   return (
     <>
       <Head>

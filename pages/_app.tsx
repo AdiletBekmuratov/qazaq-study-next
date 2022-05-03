@@ -1,5 +1,9 @@
+import RefreshTokenHandler from '@/components/RefreshTokenHandler'
+import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import 'react-phone-input-2/lib/style.css'
 import '../styles/globals.css'
 const {
@@ -18,26 +22,35 @@ const animation = {
   transition: { duration: 0.4 },
 }
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+  router,
+}: AppProps) {
+  const [interval, setInterval] = useState(0)
   return (
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <LazyMotion features={domAnimation}>
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <m.div
-            key={router.route}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={animation.variants}
-            transition={animation.transition}
-          >
-            <Component {...pageProps} />
-          </m.div>
-        </AnimatePresence>
-      </LazyMotion>
+      <SessionProvider session={session} refetchInterval={interval}>
+        <Toaster position="top-right" />
+        <LazyMotion features={domAnimation}>
+          <AnimatePresence exitBeforeEnter initial={false}>
+            <m.div
+              key={router.route}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={animation.variants}
+              transition={animation.transition}
+            >
+              <Component {...pageProps} />
+            </m.div>
+          </AnimatePresence>
+        </LazyMotion>
+        <RefreshTokenHandler setInterval={setInterval} />
+      </SessionProvider>
     </>
   )
 }

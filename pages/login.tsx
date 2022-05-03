@@ -1,11 +1,20 @@
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { ContextType, useState } from 'react'
 import * as Yup from 'yup'
+import {
+  getCsrfToken,
+  signIn,
+  SignInAuthorizationParams,
+  SignInResponse,
+} from 'next-auth/react'
+import toast from 'react-hot-toast'
 
 const SignInSchema = Yup.object().shape({
-  email: Yup.string()
+  username: Yup.string()
     .email('Must be a valid email')
     .max(255)
     .required('Required field'),
@@ -18,18 +27,37 @@ const SignInSchema = Yup.object().shape({
 })
 
 interface FormValues {
-  email: string
+  username: string
   password: string
 }
 
+interface LoginProps {
+  csrfToken: any
+}
+
 const initialValues: FormValues = {
-  email: '',
+  username: '',
   password: '',
 }
 
-const Login: NextPage = () => {
-  const handleSubmit = (values: FormValues) => {
-    console.log(values)
+const Login: NextPage<LoginProps> = ({ csrfToken }) => {
+  const router = useRouter()
+  const [error, setError] = useState(false)
+
+  const handleSubmit = async (values: FormValues) => {
+    const res = (await signIn('credentials', {
+      redirect: false,
+      username: values.username,
+      password: values.password,
+      callbackUrl: `/`,
+    })) as unknown as SignInResponse
+
+    if (res?.error) {
+      setError(true)
+      toast.error(res.error)
+    } else {
+      router.push('/')
+    }
   }
 
   return (
@@ -91,18 +119,23 @@ const Login: NextPage = () => {
               >
                 {(props: FormikProps<FormValues>) => (
                   <Form className="mt-8 space-y-6" action="#" method="POST">
+                    <input
+                      name="csrfToken"
+                      type="hidden"
+                      defaultValue={csrfToken}
+                    />
                     <div className="relative">
                       <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                         Email
                       </label>
                       <Field
-                        name="email"
+                        name="username"
                         className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
                         type="email"
                         placeholder="mail@example.com"
                       />
                       <ErrorMessage
-                        name="email"
+                        name="username"
                         component={'div'}
                         className="mt-1 ml-3 text-sm text-red-400"
                       />
@@ -159,6 +192,14 @@ const Login: NextPage = () => {
       </section>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  }
 }
 
 export default Login
