@@ -1,4 +1,3 @@
-import useAuth from '@/hooks/useAuth'
 import { useSession } from 'next-auth/react'
 import { FC, useEffect } from 'react'
 
@@ -8,7 +7,7 @@ interface HandlerProps {
 
 const RefreshTokenHandler: FC<HandlerProps> = ({ setInterval }) => {
   const { data: session } = useSession()
-  useAuth(true)
+
   useEffect(() => {
     if (!!session) {
       const timeRemaining = Math.round(

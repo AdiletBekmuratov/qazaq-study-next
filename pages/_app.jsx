@@ -1,6 +1,6 @@
+import Auth from '@/components/Auth'
 import RefreshTokenHandler from '@/components/RefreshTokenHandler'
 import { SessionProvider } from 'next-auth/react'
-import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
@@ -22,11 +22,7 @@ const animation = {
   transition: { duration: 0.4 },
 }
 
-function MyApp({
-  Component,
-  pageProps: { session, ...pageProps },
-  router,
-}: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps }, router }) {
   const [interval, setInterval] = useState(0)
   return (
     <>
@@ -45,7 +41,13 @@ function MyApp({
               variants={animation.variants}
               transition={animation.transition}
             >
-              <Component {...pageProps} />
+              {Component.auth ? (
+                <Auth role={Component.auth?.role}>
+                  <Component {...pageProps} />
+                </Auth>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </m.div>
           </AnimatePresence>
         </LazyMotion>

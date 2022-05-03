@@ -52,7 +52,7 @@ const Home: NextPage = () => {
               free!
             </h2>
           </div>
-          <div className="container mx-auto grid grid-cols-1 justify-center justify-items-center gap-y-20 px-10 py-24 md:grid-cols-2 md:gap-4 xl:grid-cols-3">
+          <div className="container mx-auto grid grid-cols-1 justify-center justify-items-center gap-y-20 px-10 py-16  md:grid-cols-2 md:gap-4 xl:grid-cols-3">
             <div className="flex w-full flex-col flex-wrap justify-start space-y-20">
               <div className="flex items-start space-x-6">
                 <ImBooks className="h-16 w-16 text-blue-600" />
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-16 hidden items-center xl:block">
+            <div className="hidden items-center xl:block">
               <img src="/images/books.png" />
             </div>
             <div className="flex w-full flex-wrap space-y-20">
@@ -109,72 +109,59 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <section className="gird-cols-1 container mx-auto grid justify-center justify-items-center px-5 py-24 xl:grid-cols-2">
-          <div className="md:w-6/8 flex w-4/6 items-center">
-            <img
-              className="w-full rounded object-cover"
-              src="/images/anel.png"
-              alt="anel letaet"
-            />
-          </div>
-          <div className="mt-20 w-8/12">
-            <div className="">
-              <h1 className="text-xl font-semibold sm:text-4xl md:text-4xl">
-                Track your progress
-              </h1>
-              <div className="mt-5 w-10/12">
-                <p className="text-base sm:text-xl">
-                  Learn new meaning every day and track your proggress bar in
-                  profile.
-                </p>
+        <section className="relative z-10 w-full">
+          <div className='sec-2'>
+            <div className='container mx-auto flex flex-col md:flex-row justify-center items-center justify-items-center space-y-6 md:space-y-0 space-x-0 md:space-x-16 px-10 py-10 md:py-24'>
+              <div className='w-full md:w-1/2 flex justify-center'>
+                <img className='w-[500px]' src="/images/anel.png" />
+              </div>
+              <div className='w-full md:w-1/2'>
+                <div className='w-full xl:w-2/3 flex flex-col space-y-3'>
+                  <h2> Track your progress </h2>
+                  <p className='text-xl'>Learn new meaning every day and track your proggress bar in profile. </p>
+                  <h2>Remember</h2>
+                  <p className='text-xl'>Sign up and save your favourite words and check the learned ones.</p>
+                  <Link href={'#'}>
+                    <a className="w-full rounded-lg border bg-dark-blue py-2.5 text-center ripple font-semibold text-white">
+                      REGISTER
+                    </a>
+                  </Link>
+                </div>
               </div>
 
-              <h1 className="mt-8 text-xl font-semibold sm:text-4xl md:text-4xl">
-                Remember
-              </h1>
-              <div className="mt-5 w-10/12">
-                <p className="text-base sm:text-xl">
-                  Sign up and save your favourite words and check the learned
-                  ones.
-                </p>
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="mt-8 flex w-full cursor-pointer justify-center rounded-md bg-dark-blue 
-									p-4 font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
-              >
-                REGISTER
-              </button>
             </div>
           </div>
         </section>
 
-        <section className="w-full">
-          <div className="container mx-auto grid grid-cols-1 justify-center justify-items-center px-5 py-24 md:grid-cols-3 md:gap-4">
-            <div className="hidden md:block">
-              <img className="" src={'/images/bills.svg'} />
-            </div>
-            <div className="flex flex-wrap justify-center justify-items-center space-y-6 pt-9 md:-space-y-12 lg:-space-y-20">
-              <p className="text-center text-xl font-semibold lg:text-3xl">
-                Dowload our <span className="text-dark-blue">QazaqStudy</span>{' '}
-                mobile app and improve your knowlege no matter where and when.
-              </p>
-              <Link href={'#'}>
-                <a>
-                  <img className="w-40 lg:w-full" src="/images/google.svg" />
-                </a>
-              </Link>
-            </div>
-            <div className="md: mt-8">
-              <img className="w-48" src="/images/adilet2.png" />
+        <section className="relative z-10 w-full">
+          <div className='sec-3'>
+            <div className="container mx-auto grid grid-cols-1 justify-center justify-items-center px-16 md:px-5 py-10 md:py-24 md:grid-cols-3 md:gap-4">
+              <div className="hidden md:block">
+                <img className="" src={'/images/bills.svg'} />
+              </div>
+              <div className="flex flex-wrap justify-center justify-items-center space-y-6 pt-9 md:-space-y-12 lg:-space-y-20">
+                <p className="text-center text-xl font-semibold lg:text-3xl">
+                  Dowload our <span className="text-dark-blue">QazaqStudy</span>{' '}
+                  mobile app and improve your knowlege no matter where and when.
+                </p>
+                <Link href={'#'}>
+                  <a>
+                    <img className="w-40 lg:w-full" src="/images/google.svg" />
+                  </a>
+                </Link>
+              </div>
+              <div className="hidden md:block">
+                <img className="w-32 lg:w-44" src="/images/adilet2.png" />
+              </div>
             </div>
           </div>
         </section>
 
-        <ContactUs />
+        <section className='relative z-10'>
+          <ContactUs />
+        </section>
 
+        
         <Footer />
       </main>
     </>

@@ -1,15 +1,27 @@
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { VscArrowSwap } from 'react-icons/vsc'
 import { IoMdClose } from 'react-icons/io'
 import { AiFillSound } from 'react-icons/ai'
+import { MdContentCopy } from 'react-icons/md'
 import Link from 'next/link'
 
 const Translator: NextPage = () => {
   const [reverse, setReverse] = useState(false)
   const [output, setOutput] = useState('')
+  const inputRef = useRef<HTMLSpanElement | null>(null)
+  const outputRef = useRef<HTMLParagraphElement | null>(null)
+
+  const clearInput = () => {
+    inputRef!.current!.textContent = ""
+    outputRef!.current!.textContent = ""
+  }
+
+  const copyText = () => {
+    navigator.clipboard.writeText(output)
+  }
 
   const translite_lat: { [key: string]: any } = {
     А: 'A',
@@ -203,12 +215,12 @@ const Translator: NextPage = () => {
     return text
   }
 
-  const translate = (event: { target: { value: any } }) => {
+  const translate = (value: string) => {
     var result = ''
     if (!reverse) {
-      result = convert_to_lat(event.target.value)
+      result = convert_to_lat(value)
     } else {
-      result = convert_to_kaz(event.target.value)
+      result = convert_to_kaz(value)
     }
 
     setOutput(result)
@@ -221,7 +233,7 @@ const Translator: NextPage = () => {
         <p className="text-3xl font-semibold">Cirillyc - Latin Translator</p>
         <div className="rounded-lg border border-gray-300 ">
           <div className="flex flex-wrap">
-            <div className="w-2/5 px-7 py-3">
+            <div className="w-2/5 px-7 py-3 relative">
               <p className="text-2xl">{reverse ? 'Latin' : 'Cyrillic'}</p>
             </div>
             <div className="flex w-1/5 items-center justify-center">
@@ -236,28 +248,29 @@ const Translator: NextPage = () => {
             </div>
             <div className="h-px w-full bg-gray-300"></div>
           </div>
-          <div className="flex flex-col md:flex-row">
-            <div className="relative h-[300px] w-full rounded-bl-lg md:w-1/2">
-              <IoMdClose className="absolute right-3 top-3 h-8 w-8" />
-              <textarea
-                placeholder="Type here!"
-                rows={9}
-                className="w-full resize-none rounded-bl-lg border-none px-6 py-6 text-xl"
-                onChange={translate}
-              ></textarea>
-              <img
+          <div className="flex flex-col md:flex-row min-h-[300px]">
+            <div className="relative h-full w-full rounded-bl-lg md:w-1/2 flex p-6">
+              <span className="textarea-translator w-[90%] flex-1 min-h-[300px] resize-none overflow-auto bg-transparent outline-none border-none text-xl" role="textbox" contentEditable ref={inputRef} onInput={e => translate(e.currentTarget.textContent as string)}> </span>
+              <div>
+                <IoMdClose onClick={clearInput} className="h-8 w-8 cursor-pointer" />
+              </div>
+              {/* <img
                 className="absolute bottom-5 left-5 h-7 w-7"
                 src="/images/sound.png"
-              />
+              /> */}
             </div>
-            <p className="relative ml-px block h-[300px] w-full overflow-y-auto break-words rounded-br-lg border-none  bg-gray-area px-6 py-6 text-left text-xl md:w-1/2">
-              <IoMdClose className="absolute right-3 top-3 h-8 w-8" />
-              {output}
-              <img
+            <div className='flex flex-row relative min-h-[300px] w-full md:w-1/2 bg-gray-area p-6 rounded-br-lg border-none '>
+              <p className="ml-px block overflow-y-auto break-words text-left text-xl" ref={outputRef}>
+                {output}
+                {/* <img
                 className="absolute bottom-5 left-5 h-7 w-7"
                 src="/images/sound.png"
-              />
-            </p>
+              /> */}
+              </p>
+              <div>
+                <MdContentCopy onClick={copyText} className="absolute bottom-5 right-5 h-8 w-8 cursor-pointer" />
+              </div>
+            </div>
           </div>
         </div>
       </section>

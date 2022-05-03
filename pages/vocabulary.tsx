@@ -7,7 +7,7 @@ const Vocabulary: NextPage = () => {
   return (
     <>
       <Navbar />
-      <section className="container mx-auto px-5 py-10">
+      <section className="container mx-auto px-5 py-10 flex flex-col space-y-40">
         <Card
           qaz_word={'сөз'}
           type={'noun'}

@@ -208,3 +208,96 @@
   right: 0;
   bottom: -100px;
 }
+
+.sec-2::after {
+  content: url('/images/sec2-cicles.svg');
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  top: -70px;
+}
+
+.sec-3::after {
+  content: url('/images/sec3-cicles.svg');
+  z-index: -1;
+  position: absolute;
+  right: 0;
+  bottom: -160px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .sec-3::after {
+    display: none;
+  }
+  .sec-2::after {
+    width: 100px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .sec-2::after {
+    display: none;
+  }
+}
+
+.textarea-translator[contentEditable]:empty::before {
+  content: 'Type here!';
+}
+
+.loader1 {
+  border-radius: 50%;
+  border-top: 20px solid dodgerblue;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid dodgerblue;
+  animation-name: rotatepos;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+.inside1 {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border-left: 20px solid dodgerblue;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 20px solid dodgerblue;
+  animation-name: buruh;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+.loader1 {
+  height: 150px;
+  width: 150px;
+}
+.inside1 span {
+  animation-name: rotatepos;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  font-family: monospace;
+  color: dodgerblue;
+}
+@keyframes rotatepos {
+  0% {
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes buruh {
+  0% {
+  }
+  50% {
+    transform: rotate(-720deg);
+  }
+}
+@keyframes stuff2 {
+  0% {
+  }
+  50% {
+    transform: rotate(720deg);
+  }
+}

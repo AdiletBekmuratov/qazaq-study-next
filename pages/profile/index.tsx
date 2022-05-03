@@ -9,13 +9,13 @@ const Profile: NextPage = () => {
   return (
     <>
       <Navbar />
-      <section className="container mx-auto flex flex-col justify-between space-y-4 px-5 py-10 xl:flex-row">
+      <section className="container mx-auto flex flex-col justify-between items-center space-y-4 px-5 py-10 md:flex-row">
         <div className="flex flex-col items-center space-y-2 md:flex-row md:space-x-16">
           <img
             className="aspect-square w-36 rounded-full"
             src={'/images/profileAnel.png'}
           />
-          <div className="flex flex-col space-y-2 lg:flex-row lg:space-x-16">
+          <div className="flex flex-col space-y-2 lg:flex-row lg:space-x-16 text-center md:text-left">
             <div className="">
               <h3>Anel Amanbekova</h3>
               <h3 className="text-light-blue">Advanced</h3>
@@ -27,9 +27,9 @@ const Profile: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center md:justify-end lg:items-center">
-          <Link href={'/profile_edit'}>
-            <a className="rounded-lg border bg-dark-blue px-10 py-3 text-xl text-white ">
+        <div className="">
+          <Link href={'/profile/edit'}>
+            <a className="rounded-lg border bg-dark-blue px-10 py-2.5 ripple text-white ">
               CHANGE
             </a>
           </Link>
