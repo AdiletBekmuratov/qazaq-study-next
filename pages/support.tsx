@@ -1,31 +1,30 @@
-import Navbar from '@/components/Navbar'
-import { NextPage } from 'next'
-import React from 'react'
-import PhoneInput from 'react-phone-input-2'
-import { useEffect } from 'react'
-import Head from 'next/head'
+import Button from '@/components/Button'
 // @ts-ignore
-import HoverEffect from "hover-effect";
-
+import HoverEffect from 'hover-effect'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import React, { useEffect } from 'react'
+import PhoneInput from 'react-phone-input-2'
 
 const Support: NextPage = () => {
-
   useEffect(() => {
     let animation = new HoverEffect({
       parent: document.querySelector('#image_container'),
       intensity: 0.3,
-      image1: 'https://images.unsplash.com/photo-1589395937772-f67057e233c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80',
-      image2: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80',
-      displacementImage: 'https://raw.githubusercontent.com/robin-dela/hover-effect/master/images/fluid.jpg',
+      image1:
+        'https://images.unsplash.com/photo-1589395937772-f67057e233c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80',
+      image2:
+        'https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80',
+      displacementImage:
+        'https://raw.githubusercontent.com/robin-dela/hover-effect/master/images/fluid.jpg',
     })
   }, [])
 
   return (
     <>
-		<Head>
-			<title>Support | Qazaq Study</title>
-		</Head>
-      <Navbar />
+      <Head>
+        <title>Support | Qazaq Study</title>
+      </Head>
       <section className="relative flex min-h-screen">
         <div className="flex min-w-0 flex-auto flex-col items-center bg-white sm:flex-row sm:justify-center md:items-start md:justify-start">
           <div className="flex h-full w-full items-center justify-center rounded-none bg-white p-5 sm:w-auto sm:rounded-lg md:w-1/2 md:p-10 ">
@@ -35,7 +34,7 @@ const Support: NextPage = () => {
                   Contact Us!
                 </h2>
               </div>
-              <form className="w-full max-w-lg mx-auto">
+              <form className="mx-auto flex w-full max-w-lg flex-col space-y-4">
                 <div className="relative">
                   <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                     Email
@@ -47,7 +46,7 @@ const Support: NextPage = () => {
                     placeholder="mail@example.com"
                   />
                 </div>
-                <div className="mt-8 content-center">
+                <div className="content-center">
                   <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                     Name
                   </label>
@@ -58,7 +57,7 @@ const Support: NextPage = () => {
                     placeholder="Enter your name"
                   />
                 </div>
-                <div className="mt-8 content-center">
+                <div className="content-center">
                   <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                     Phone
                   </label>
@@ -71,7 +70,7 @@ const Support: NextPage = () => {
                   />
                 </div>
 
-                <div className="mt-8 content-center">
+                <div className="content-center">
                   <label className="ml-3 text-sm font-bold tracking-wide text-gray-700 ">
                     Message
                   </label>
@@ -83,22 +82,14 @@ const Support: NextPage = () => {
                   ></textarea>
                 </div>
                 <div className="md:flex md:items-center">
-                  <div className="md:w-2/6"></div>
-                  <div className="md:w-4/6 ">
-                    <button
-                      className=" ripple mt-5  rounded bg-dark-blue py-2 px-14 font-bold text-white"
-                      type="button"
-                    >
-                      Send
-                    </button>
-                  </div>
+                  <Button type="button">Send</Button>
                 </div>
               </form>
             </div>
           </div>
 
           <div
-						id='image_container'
+            id="image_container"
             className="relative hidden h-full w-full flex-auto items-center justify-center overflow-hidden text-white md:flex md:w-1/2"
           >
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-dark-blue to-light-blue opacity-70" />

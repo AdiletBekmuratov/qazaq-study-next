@@ -12,19 +12,25 @@
   }
 
   h3 {
-    @apply text-xl font-bold md:text-3xl;
+    @apply text-xl 
+    font-bold 
+    md:text-3xl;
   }
 
   h4 {
-    @apply text-lg font-bold;
+    @apply text-lg 
+    font-bold;
   }
 
   body {
-    @apply text-sm md:text-base;
+    @apply text-sm 
+    md:text-base;
   }
 
   .layout {
-    @apply container mx-auto px-4;
+    @apply container 
+    mx-auto 
+    px-4;
   }
 }
 
@@ -36,6 +42,7 @@
   height: 100%;
   overflow: hidden;
 }
+
 .circles li {
   position: absolute;
   display: block;
@@ -46,6 +53,7 @@
   animation: animate 25s linear infinite;
   bottom: -150px;
 }
+
 .circles li:nth-child(1) {
   left: 25%;
   width: 80px;
@@ -120,6 +128,7 @@
   animation-delay: 0s;
   animation-duration: 11s;
 }
+
 @keyframes animate {
   0% {
     transform: translateY(0) rotate(0deg);
@@ -134,20 +143,36 @@
   }
 }
 
-.ripple {
-  background-position: center;
-  transition: background 0.8s;
+.ripple-button > .ripple {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: rgb(109, 213, 237);
+  display: block;
+  content: '';
+  border-radius: 9999px;
+  opacity: 1;
+  animation: 0.9s ease 1 forwards ripple-effect;
 }
 
-.ripple:hover {
-  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%)
-    center/15000%;
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(10);
+    opacity: 0.375;
+  }
+  100% {
+    transform: scale(35);
+    opacity: 0;
+  }
 }
 
-.ripple:active {
-  background-color: #6eb9f7;
-  background-size: 100%;
-  transition: background 0s;
+.ripple-button > .content {
+  position: relative;
+  z-index: 2;
 }
 
 .react-tel-input .form-control {
@@ -207,6 +232,7 @@
   position: absolute;
   right: 0;
   bottom: -100px;
+  pointer-events: none;
 }
 
 .sec-2::after {
@@ -215,6 +241,7 @@
   position: absolute;
   left: 0;
   top: -70px;
+  pointer-events: none;
 }
 
 .sec-3::after {
@@ -223,12 +250,14 @@
   position: absolute;
   right: 0;
   bottom: -160px;
+  pointer-events: none;
 }
 
 @media only screen and (max-width: 1200px) {
   .sec-3::after {
     display: none;
   }
+
   .sec-2::after {
     width: 100px;
   }
@@ -254,6 +283,7 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
+
 .inside1 {
   display: flex;
   place-items: center;
@@ -269,10 +299,12 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
+
 .loader1 {
   height: 150px;
   width: 150px;
 }
+
 .inside1 span {
   animation-name: rotatepos;
   animation-duration: 2s;
@@ -280,23 +312,29 @@
   font-family: monospace;
   color: dodgerblue;
 }
+
 @keyframes rotatepos {
   0% {
   }
+
   50% {
     transform: rotate(360deg);
   }
 }
+
 @keyframes buruh {
   0% {
   }
+
   50% {
     transform: rotate(-720deg);
   }
 }
+
 @keyframes stuff2 {
   0% {
   }
+
   50% {
     transform: rotate(720deg);
   }

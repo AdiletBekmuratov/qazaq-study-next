@@ -12,6 +12,7 @@ import {
   SignInResponse,
 } from 'next-auth/react'
 import toast from 'react-hot-toast'
+import Button from '@/components/Button'
 
 const SignInSchema = Yup.object().shape({
   username: Yup.string()
@@ -167,13 +168,7 @@ const Login: NextPage<LoginProps> = ({ csrfToken }) => {
                       </div>
                     </div>
                     <div>
-                      <button
-                        type="submit"
-                        className="ripple flex w-full cursor-pointer justify-center rounded-md bg-dark-blue p-4 
-											font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
-                      >
-                        Sign in
-                      </button>
+                      <Button type="submit">Sign in</Button>
                     </div>
                     <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
                       <span>Don't have an account?</span>

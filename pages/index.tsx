@@ -1,6 +1,7 @@
+import Button from '@/components/Button'
 import ContactUs from '@/components/ContactUs'
 import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import MainWrapper from '@/components/MainWrapper'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
@@ -14,12 +15,11 @@ const Home: NextPage = () => {
   console.log(session)
 
   return (
-    <>
+    <MainWrapper>
       <Head>
         <title>Главная | Qazaq Study</title>
       </Head>
       <main>
-        <Navbar />
         <section className="relative z-10 w-full">
           <div className="sec-1">
             <div className="container relative mx-auto grid grid-cols-1 items-center justify-center px-5 py-24 md:grid-cols-2">
@@ -110,32 +110,34 @@ const Home: NextPage = () => {
         </section>
 
         <section className="relative z-10 w-full">
-          <div className='sec-2'>
-            <div className='container mx-auto flex flex-col md:flex-row justify-center items-center justify-items-center space-y-6 md:space-y-0 space-x-0 md:space-x-16 px-10 py-10 md:py-24'>
-              <div className='w-full md:w-1/2 flex justify-center'>
-                <img className='w-[500px]' src="/images/anel.png" />
+          <div className="sec-2">
+            <div className="container mx-auto flex flex-col items-center justify-center justify-items-center space-y-6 space-x-0 px-10 py-10 md:flex-row md:space-y-0 md:space-x-16 md:py-24">
+              <div className="flex w-full justify-center md:w-1/2">
+                <img className="w-[500px]" src="/images/anel.png" />
               </div>
-              <div className='w-full md:w-1/2'>
-                <div className='w-full xl:w-2/3 flex flex-col space-y-3'>
+              <div className="w-full md:w-1/2">
+                <div className="flex w-full flex-col space-y-3 xl:w-2/3">
                   <h2> Track your progress </h2>
-                  <p className='text-xl'>Learn new meaning every day and track your proggress bar in profile. </p>
+                  <p className="text-xl">
+                    Learn new meaning every day and track your proggress bar in
+                    profile.
+                  </p>
                   <h2>Remember</h2>
-                  <p className='text-xl'>Sign up and save your favourite words and check the learned ones.</p>
-                  <Link href={'#'}>
-                    <a className="w-full rounded-lg border bg-dark-blue py-2.5 text-center ripple font-semibold text-white">
-                      REGISTER
-                    </a>
-                  </Link>
+                  <p className="text-xl">
+                    Sign up and save your favourite words and check the learned
+                    ones.
+                  </p>
+
+                  <Button link="/register">REGISTER</Button>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
 
         <section className="relative z-10 w-full">
-          <div className='sec-3'>
-            <div className="container mx-auto grid grid-cols-1 justify-center justify-items-center px-16 md:px-5 py-10 md:py-24 md:grid-cols-3 md:gap-4">
+          <div className="sec-3">
+            <div className="container mx-auto grid grid-cols-1 justify-center justify-items-center px-16 py-10 md:grid-cols-3 md:gap-4 md:px-5 md:py-24">
               <div className="hidden md:block">
                 <img className="" src={'/images/bills.svg'} />
               </div>
@@ -157,14 +159,13 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <section className='relative z-10'>
+        <section className="relative z-10">
           <ContactUs />
         </section>
 
-        
         <Footer />
       </main>
-    </>
+    </MainWrapper>
   )
 }
 

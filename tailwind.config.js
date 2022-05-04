@@ -12,6 +12,7 @@ module.exports = {
         'light-blue-2': 'rgba(103, 208, 232, 0.25)',
         'custom-yellow': '#FFD11A',
         'gray-area': '#E5E5E5',
+        'light-quiz': 'rgb(207,225,237)'
       },
     },
   },

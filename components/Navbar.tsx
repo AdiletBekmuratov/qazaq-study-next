@@ -1,12 +1,11 @@
 import { signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
 import React from 'react'
 import NavLink from './NavLink'
 
 const Navbar = () => {
   const { data: session } = useSession()
   return (
-    <nav className=" relative z-50 bg-dark-blue py-5 px-5 text-white shadow">
+    <nav className="fixed top-0 z-50 w-full bg-dark-blue p-5 text-white shadow">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <a href="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-xl font-semibold">
@@ -68,7 +67,11 @@ const Navbar = () => {
               onClick={() => signOut({ callbackUrl: '/login' })}
             />
             <NavLink condition={!session?.user} title="Login" href="/login" />
-						<NavLink condition={!session?.user} title="Register" href="/register" />
+            <NavLink
+              condition={!session?.user}
+              title="Register"
+              href="/register"
+            />
           </ul>
         </div>
       </div>

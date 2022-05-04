@@ -1,11 +1,12 @@
+import Button from '@/components/Button'
+import axios from 'axios'
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
 import { NextPage } from 'next'
-import Link from 'next/link'
-import * as Yup from 'yup'
-import PhoneInput from 'react-phone-input-2'
 import Head from 'next/head'
+import Link from 'next/link'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import PhoneInput from 'react-phone-input-2'
+import * as Yup from 'yup'
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string()
@@ -173,13 +174,7 @@ const Register: NextPage = () => {
                       />
                     </div>
                     <div>
-                      <button
-                        type="submit"
-                        className="ripple flex w-full cursor-pointer justify-center rounded-md bg-dark-blue p-4 
-											font-semibold tracking-wide text-gray-100 transition duration-300 ease-in-out hover:shadow-md"
-                      >
-                        Sign up
-                      </button>
+                      <Button type="submit">Sign up</Button>
                     </div>
                     <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
                       <span>Already have an account?</span>

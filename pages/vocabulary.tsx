@@ -1,13 +1,12 @@
 import Card from '@/components/Card'
 import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import MainWrapper from '@/components/MainWrapper'
 import { NextPage } from 'next'
 
 const Vocabulary: NextPage = () => {
   return (
-    <>
-      <Navbar />
-      <section className="container mx-auto px-5 py-10 flex flex-col space-y-40">
+    <MainWrapper>
+      <section className="container mx-auto flex flex-col space-y-40 px-5 py-10">
         <Card
           qaz_word={'сөз'}
           type={'noun'}
@@ -47,7 +46,7 @@ const Vocabulary: NextPage = () => {
       </section>
 
       <Footer />
-    </>
+    </MainWrapper>
   )
 }
 

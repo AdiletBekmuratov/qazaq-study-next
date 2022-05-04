@@ -41,14 +41,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, router }) {
               variants={animation.variants}
               transition={animation.transition}
             >
-              {Component.auth ? (
-                <Auth role={Component.auth?.role}>
-                  <Component {...pageProps} />
-                </Auth>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </m.div>
+        {Component.auth ? (
+          <Auth role={Component.auth?.role}>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
+          <Component {...pageProps} />
+        )}
+        </m.div>
           </AnimatePresence>
         </LazyMotion>
         <RefreshTokenHandler setInterval={setInterval} />

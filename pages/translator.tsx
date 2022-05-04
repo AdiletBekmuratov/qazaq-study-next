@@ -1,13 +1,12 @@
 import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import MainWrapper from '@/components/MainWrapper'
 import { NextPage } from 'next'
-import React, { useRef, useState } from 'react'
-import { VscArrowSwap } from 'react-icons/vsc'
-import { IoMdClose } from 'react-icons/io'
-import { AiFillSound } from 'react-icons/ai'
-import { MdContentCopy } from 'react-icons/md'
 import Link from 'next/link'
+import React, { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import { IoMdClose } from 'react-icons/io'
+import { MdContentCopy } from 'react-icons/md'
+import { VscArrowSwap } from 'react-icons/vsc'
 
 const Translator: NextPage = () => {
   const [reverse, setReverse] = useState(false)
@@ -16,13 +15,13 @@ const Translator: NextPage = () => {
   const outputRef = useRef<HTMLParagraphElement | null>(null)
 
   const clearInput = () => {
-    inputRef!.current!.textContent = ""
-    outputRef!.current!.textContent = ""
+    inputRef!.current!.textContent = ''
+    outputRef!.current!.textContent = ''
   }
 
   const copyText = () => {
     navigator.clipboard.writeText(output)
-		toast.success("Copied to clipboard")
+    toast.success('Copied to clipboard')
   }
 
   const translite_lat: { [key: string]: any } = {
@@ -229,13 +228,12 @@ const Translator: NextPage = () => {
   }
 
   return (
-    <>
-      <Navbar />
+    <MainWrapper>
       <section className="flex w-full flex-col space-y-8 px-8 py-10 shadow-2xl md:px-20 lg:px-40">
         <p className="text-3xl font-semibold">Cirillyc - Latin Translator</p>
         <div className="rounded-lg border border-gray-300 ">
           <div className="flex flex-wrap">
-            <div className="w-2/5 px-7 py-3 relative">
+            <div className="relative w-2/5 px-7 py-3">
               <p className="text-2xl">{reverse ? 'Latin' : 'Cyrillic'}</p>
             </div>
             <div className="flex w-1/5 items-center justify-center">
@@ -250,19 +248,35 @@ const Translator: NextPage = () => {
             </div>
             <div className="h-px w-full bg-gray-300"></div>
           </div>
-          <div className="flex flex-col md:flex-row min-h-[300px]">
-            <div className="relative h-full w-full rounded-bl-lg md:w-1/2 flex p-6">
-              <span className="textarea-translator w-[90%] flex-1 min-h-[300px] resize-none overflow-auto bg-transparent outline-none border-none text-xl" role="textbox" contentEditable ref={inputRef} onInput={e => translate(e.currentTarget.textContent as string)}> </span>
+          <div className="flex min-h-[300px] flex-col md:flex-row">
+            <div className="relative flex h-full w-full rounded-bl-lg p-6 md:w-1/2">
+              <span
+                className="textarea-translator min-h-[300px] w-[90%] flex-1 resize-none overflow-auto border-none bg-transparent text-xl outline-none"
+                role="textbox"
+                contentEditable
+                ref={inputRef}
+                onInput={(e) =>
+                  translate(e.currentTarget.textContent as string)
+                }
+              >
+                {' '}
+              </span>
               <div>
-                <IoMdClose onClick={clearInput} className="h-8 w-8 cursor-pointer" />
+                <IoMdClose
+                  onClick={clearInput}
+                  className="h-8 w-8 cursor-pointer"
+                />
               </div>
               {/* <img
                 className="absolute bottom-5 left-5 h-7 w-7"
                 src="/images/sound.png"
               /> */}
             </div>
-            <div className='flex flex-row relative min-h-[300px] w-full md:w-1/2 bg-gray-area p-6 rounded-br-lg border-none '>
-              <p className="ml-px block overflow-y-auto break-words text-left text-xl" ref={outputRef}>
+            <div className="relative flex min-h-[300px] w-full flex-row rounded-br-lg border-none bg-gray-area p-6 md:w-1/2 ">
+              <p
+                className="ml-px block overflow-y-auto break-words text-left text-xl"
+                ref={outputRef}
+              >
                 {output}
                 {/* <img
                 className="absolute bottom-5 left-5 h-7 w-7"
@@ -270,14 +284,17 @@ const Translator: NextPage = () => {
               /> */}
               </p>
               <div>
-                <MdContentCopy onClick={copyText} className="absolute bottom-5 right-5 h-8 w-8 cursor-pointer" />
+                <MdContentCopy
+                  onClick={copyText}
+                  className="absolute bottom-5 right-5 h-8 w-8 cursor-pointer"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
       <Footer />
-    </>
+    </MainWrapper>
   )
 }
 
