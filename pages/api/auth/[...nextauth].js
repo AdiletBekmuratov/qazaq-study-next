@@ -88,8 +88,6 @@ const options = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        console.log({ user })
-
         token.accessToken = user.accessToken
         token.accessTokenExpires = user.accessTokenExpires
         token.refreshToken = user.refreshToken
@@ -101,6 +99,8 @@ const options = {
       const shouldRefreshTime = Math.round(
         token.accessTokenExpires - 5 * 60 * 1000 - Date.now()
       )
+
+      console.log({ shouldRefreshTime })
 
       if (shouldRefreshTime > 0) {
         return token

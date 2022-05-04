@@ -1,9 +1,12 @@
+import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
+import NavLink from './NavLink'
 
 const Navbar = () => {
+  const { data: session } = useSession()
   return (
-    <nav className=" bg-dark-blue py-5 px-5 text-white shadow">
+    <nav className=" relative z-50 bg-dark-blue py-5 px-5 text-white shadow">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <a href="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-xl font-semibold">
@@ -45,44 +48,27 @@ const Navbar = () => {
         </button>
         <div className="hidden w-full md:block md:w-auto" id="mobile-menu">
           <ul className="mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium">
-            <li>
-              <Link href="/translator">
-                <a
-                  className="block rounded py-2 pr-4 pl-3 text-white hover:opacity-80 md:p-0"
-                  aria-current="page"
-                >
-                  Translator
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/vocabulary">
-                <a className="block py-2 pr-4 pl-3 text-white hover:opacity-80 md:p-0">
-                  Vocabulary Cards
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                <a className="block py-2 pr-4 pl-3 text-white hover:opacity-80 md:p-0">
-                  Quiz
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                <a className="block py-2 pr-4 pl-3 text-white hover:opacity-80 md:p-0">
-                  Support
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/profile">
-                <a className="block py-2 pr-4 pl-3 text-white hover:opacity-80 md:p-0">
-                  Profile
-                </a>
-              </Link>
-            </li>
+            <NavLink title="Translator" href="/translator" condition={true} />
+            <NavLink
+              title="Vocabulary Cards"
+              href="/vocabulary"
+              condition={true}
+            />
+            <NavLink title="Quiz" href="/quiz" condition={true} />
+            <NavLink title="Support" href="/support" condition={true} />
+            <NavLink
+              title="Profile"
+              href="/profile"
+              condition={!!session?.user}
+            />
+
+            <NavLink
+              condition={!!session?.user}
+              title="Quit"
+              onClick={() => signOut({ callbackUrl: '/login' })}
+            />
+            <NavLink condition={!session?.user} title="Login" href="/login" />
+						<NavLink condition={!session?.user} title="Register" href="/register" />
           </ul>
         </div>
       </div>

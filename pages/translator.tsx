@@ -7,6 +7,7 @@ import { IoMdClose } from 'react-icons/io'
 import { AiFillSound } from 'react-icons/ai'
 import { MdContentCopy } from 'react-icons/md'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 const Translator: NextPage = () => {
   const [reverse, setReverse] = useState(false)
@@ -21,6 +22,7 @@ const Translator: NextPage = () => {
 
   const copyText = () => {
     navigator.clipboard.writeText(output)
+		toast.success("Copied to clipboard")
   }
 
   const translite_lat: { [key: string]: any } = {
