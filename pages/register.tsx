@@ -4,6 +4,8 @@ import Link from 'next/link'
 import * as Yup from 'yup'
 import PhoneInput from 'react-phone-input-2'
 import Head from 'next/head'
+import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string()
@@ -28,7 +30,7 @@ interface FormValues {
   name: string
   phone: string
   password: string
-  confirmPassword: string
+  confirmPassword?: string
 }
 
 const initialValues: FormValues = {
@@ -40,8 +42,19 @@ const initialValues: FormValues = {
 }
 
 const Register: NextPage = () => {
-  const handleSubmit = (values: FormValues) => {
-    console.log(values)
+  const handleSubmit = async (values: FormValues) => {
+    delete values.confirmPassword
+    await toast.promise(
+      axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/authentication/registerUser`,
+        values
+      ),
+      {
+        success: 'Регистрация прошла успешно',
+        loading: 'Загрузка',
+        error: (error) => `Ошибка: ${error.response.data.response}`,
+      }
+    )
   }
 
   return (
@@ -107,7 +120,7 @@ const Register: NextPage = () => {
                       </label>
                       <Field
                         name="phone"
-                        inputClass="focus:shadow "
+                        inputClass="focus:shadow"
                         type="text"
                         placeholder="Enter your phone number"
                         preferredCountries={['us', 'ru', 'kz']}
