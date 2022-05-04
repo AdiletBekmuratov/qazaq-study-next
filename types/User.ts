@@ -22,3 +22,9 @@ export interface User {
   role: string[]
   id: number
 }
+
+export interface Questions {
+  id: number,
+  question: string, 
+  answers: {id:number, answer:string}[] 
+}

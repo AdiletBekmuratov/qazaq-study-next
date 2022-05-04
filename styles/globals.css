@@ -4,27 +4,39 @@
 
 @layer base {
   h1 {
-    @apply text-3xl font-bold md:text-5xl;
+    @apply text-3xl 
+    font-bold 
+    md:text-5xl;
   }
 
   h2 {
-    @apply text-2xl font-bold md:text-4xl;
+    @apply 
+    text-2xl 
+    font-bold 
+    md:text-4xl;
   }
 
   h3 {
-    @apply text-xl font-bold md:text-3xl;
+    @apply 
+    text-xl 
+    font-bold 
+    md:text-3xl;
   }
 
   h4 {
-    @apply text-lg font-bold;
+    @apply text-lg 
+    font-bold;
   }
 
   body {
-    @apply text-sm md:text-base;
+    @apply text-sm 
+    md:text-base;
   }
 
   .layout {
-    @apply container mx-auto px-4;
+    @apply container 
+    mx-auto 
+    px-4;
   }
 }
 
@@ -36,6 +48,7 @@
   height: 100%;
   overflow: hidden;
 }
+
 .circles li {
   position: absolute;
   display: block;
@@ -46,6 +59,7 @@
   animation: animate 25s linear infinite;
   bottom: -150px;
 }
+
 .circles li:nth-child(1) {
   left: 25%;
   width: 80px;
@@ -120,6 +134,7 @@
   animation-delay: 0s;
   animation-duration: 11s;
 }
+
 @keyframes animate {
   0% {
     transform: translateY(0) rotate(0deg);
@@ -140,8 +155,7 @@
 }
 
 .ripple:hover {
-  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%)
-    center/15000%;
+  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
 }
 
 .ripple:active {
@@ -229,6 +243,7 @@
   .sec-3::after {
     display: none;
   }
+
   .sec-2::after {
     width: 100px;
   }
@@ -254,6 +269,7 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
+
 .inside1 {
   display: flex;
   place-items: center;
@@ -269,10 +285,12 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
+
 .loader1 {
   height: 150px;
   width: 150px;
 }
+
 .inside1 span {
   animation-name: rotatepos;
   animation-duration: 2s;
@@ -280,23 +298,26 @@
   font-family: monospace;
   color: dodgerblue;
 }
+
 @keyframes rotatepos {
-  0% {
-  }
+  0% {}
+
   50% {
     transform: rotate(360deg);
   }
 }
+
 @keyframes buruh {
-  0% {
-  }
+  0% {}
+
   50% {
     transform: rotate(-720deg);
   }
 }
+
 @keyframes stuff2 {
-  0% {
-  }
+  0% {}
+
   50% {
     transform: rotate(720deg);
   }

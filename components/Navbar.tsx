@@ -63,7 +63,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="#">
+              <Link href="/quiz">
                 <a className="block py-2 pr-4 pl-3 text-white hover:opacity-80 md:p-0">
                   Quiz
                 </a>
