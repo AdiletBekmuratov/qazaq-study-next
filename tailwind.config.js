@@ -10,7 +10,7 @@ module.exports = {
         'dark-blue': 'rgb(33,147,176)',
         'light-blue': 'rgb(109,213,237)',
         'light-blue-2': 'rgba(103, 208, 232, 0.25)',
-        'custom-yellow': '#FFD11A',
+        'custom-yellow': 'rgb(255, 209, 26)',
         'gray-area': '#E5E5E5',
         'light-quiz': 'rgb(207,225,237)'
       },

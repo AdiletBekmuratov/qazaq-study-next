@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
+import dynamic from 'next/dynamic'
 import 'react-phone-input-2/lib/style.css'
 import '../styles/globals.css'
 const {
@@ -12,6 +13,10 @@ const {
   LazyMotion,
   m,
 } = require('framer-motion')
+
+const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+  ssr: false,
+})
 
 const animation = {
   variants: {
@@ -30,6 +35,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, router }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session} refetchInterval={interval}>
+        <AnimatedCursor color="255, 209, 26" outerSize={30} outerScale={2} />
         <Toaster position="top-right" />
         <LazyMotion features={domAnimation}>
           <AnimatePresence exitBeforeEnter initial={false}>
@@ -41,14 +47,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, router }) {
               variants={animation.variants}
               transition={animation.transition}
             >
-        {Component.auth ? (
-          <Auth role={Component.auth?.role}>
-            <Component {...pageProps} />
-          </Auth>
-        ) : (
-          <Component {...pageProps} />
-        )}
-        </m.div>
+              {Component.auth ? (
+                <Auth role={Component.auth?.role}>
+                  <Component {...pageProps} />
+                </Auth>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </m.div>
           </AnimatePresence>
         </LazyMotion>
         <RefreshTokenHandler setInterval={setInterval} />
