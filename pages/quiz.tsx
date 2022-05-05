@@ -6,6 +6,10 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import React from 'react'
 
+interface Map {
+  [key: string]: string | undefined
+}
+
 const obj = [
   {
     id: 1,
@@ -124,6 +128,10 @@ const obj = [
   },
 ]
 
+function hasValue(obj: Map, key: string, value: string) {
+  return obj.hasOwnProperty(key) && obj[key] === value
+}
+
 const quiz: NextPage = () => {
   return (
     <MainWrapper>
@@ -151,7 +159,9 @@ const quiz: NextPage = () => {
                           className={`h-full w-full p-2 ${
                             Object.keys(values).includes(
                               question.id.toString()
-                            ) && 'bg-gray-300'
+                            ) &&
+                            !hasValue(values, question.id.toString(), '') &&
+                            'bg-gray-300'
                           }	`}
                         />
                       </a>
