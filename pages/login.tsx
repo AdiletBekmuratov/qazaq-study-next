@@ -13,9 +13,10 @@ import {
 } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import Button from '@/components/Button'
+import useAuth from '@/hooks/useAuth'
 
 const SignInSchema = Yup.object().shape({
-  username: Yup.string()
+  email: Yup.string()
     .email('Must be a valid email')
     .max(255)
     .required('Required field'),
@@ -28,7 +29,7 @@ const SignInSchema = Yup.object().shape({
 })
 
 interface FormValues {
-  username: string
+  email: string
   password: string
 }
 
@@ -37,18 +38,19 @@ interface LoginProps {
 }
 
 const initialValues: FormValues = {
-  username: '',
+  email: '',
   password: '',
 }
 
 const Login: NextPage<LoginProps> = ({ csrfToken }) => {
   const router = useRouter()
+  useAuth(true)
   const [error, setError] = useState(false)
 
   const handleSubmit = async (values: FormValues) => {
     const res = (await signIn('credentials', {
       redirect: false,
-      username: values.username,
+      email: values.email,
       password: values.password,
       callbackUrl: `/`,
     })) as unknown as SignInResponse
@@ -130,13 +132,13 @@ const Login: NextPage<LoginProps> = ({ csrfToken }) => {
                         Email
                       </label>
                       <Field
-                        name="username"
+                        name="email"
                         className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
                         type="email"
                         placeholder="mail@example.com"
                       />
                       <ErrorMessage
-                        name="username"
+                        name="email"
                         component={'div'}
                         className="mt-1 ml-3 text-sm text-red-400"
                       />

@@ -13,7 +13,7 @@ export default function useAuth(shouldRedirect: boolean) {
     }
 
     if (session === null) {
-      if (router.route !== '/login') {
+      if (router.route !== '/login' && router.route !== '/register') {
         router.replace('/login')
       }
       setIsAuthenticated(false)

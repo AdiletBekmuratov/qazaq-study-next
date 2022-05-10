@@ -1,39 +1,45 @@
+import { getCurrentUser } from '@/helpers/requests'
 import axios from 'axios'
-import jwt_decode from 'jwt-decode'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 async function refreshAccessToken(token) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/authentication/refreshToken`
-    const response = await axios.post(
-      url,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token.refreshToken}`,
-        },
-      }
-    )
+    const payload = {
+      refresh_token: token.refreshToken,
+    }
 
-    const refreshedTokens = response.data
+    console.log('Payload', { payload })
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`
+    const response = await axios.post(url, payload)
+
+    const refreshedTokens = await response.data
 
     console.log('Refresh', { refreshedTokens })
 
-    const decodedAccess = jwt_decode(refreshedTokens.accessToken)
-    console.log({ decodedAccess })
+    if (refreshedTokens?.errors) {
+      console.log(refreshedTokens?.errors[0])
+    }
+
+    const userData = await getCurrentUser(refreshedTokens.data.access_token)
+    const addition = {
+      email: userData.email,
+      role: userData.role,
+      id: userData.id,
+    }
 
     let newToken = {
-      ...refreshedTokens,
-      accessTokenExpires: decodedAccess.exp * 1000,
-      roles: decodedJwt.roles,
-      refreshToken: token.refreshToken,
+      accessTokenExpires: Date.now() + refreshedTokens.data.expires,
+      accessToken: refreshedTokens.data.access_token,
+      refreshToken: refreshedTokens.data.refresh_token,
     }
 
     console.log('NEW_TOKEN', { newToken })
 
     return {
       ...newToken,
+      ...addition,
     }
   } catch (error) {
     console.log('error', error)
@@ -49,38 +55,44 @@ const options = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
-      credentials: null,
-      async authorize(credentials, _req) {
+      async authorize(credentials) {
         try {
           const payload = {
-            username: credentials?.username,
-            password: credentials?.password,
+            email: credentials.email,
+            password: credentials.password,
           }
 
-          console.log('Login Payload', { payload })
+          console.log('Payload', { payload })
 
-          const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/authentication/login`,
+          const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
             payload
           )
 
-          const tokenData = response.data
-
-          if (tokenData?.accessToken) {
-            const decodedJwt = jwt_decode(tokenData?.accessToken)
-            const returnData = {
-              ...tokenData,
-              accessTokenExpires: decodedJwt.exp * 1000,
-              roles: decodedJwt.roles,
+          const tokenData = await res.data
+          if (res.statusText !== 'OK') {
+            if (
+              tokenData?.errors[0]?.extensions?.code === 'INVALID_CREDENTIALS'
+            ) {
+              throw new Error('Неверный Email или пароль')
             }
-            console.log({ returnData })
-            return returnData
+            throw new Error(tokenData?.errors[0]?.message)
+          }
+          if (tokenData?.data?.access_token) {
+            const userData = await getCurrentUser(tokenData?.data?.access_token)
+            console.log('NEXT_USER', { userData })
+            const addition = {
+              email: userData.email,
+              role: userData.role,
+              id: userData.id,
+            }
+
+            return { ...tokenData.data, ...addition }
           }
 
           return null
         } catch (error) {
-          console.log(error)
-          return null
+          throw new Error(error)
         }
       },
     }),
@@ -88,11 +100,11 @@ const options = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        token.accessToken = user.accessToken
-        token.accessTokenExpires = user.accessTokenExpires
-        token.refreshToken = user.refreshToken
-        token.username = user.username
-        token.roles = user.roles
+        token.accessToken = user.access_token
+        token.accessTokenExpires = Date.now() + user.expires
+        token.refreshToken = user.refresh_token
+        token.email = user.email
+        token.role = user.role
         token.id = user.id
       }
 
@@ -110,13 +122,13 @@ const options = {
     },
 
     async session({ session, token }) {
+      session.user.email = token.email
+      session.user.role = token.role === process.env.D_ADMIN ? 'ADMIN' : 'USER'
       session.user.accessToken = token.accessToken
-      session.user.accessTokenExpires = token.accessTokenExpires
-      session.user.username = token.username
-      session.user.roles = token.roles
+      session.expires = token.accessTokenExpires
       session.user.id = token.id
       session.error = token?.error
-      return Promise.resolve(session)
+      return session
     },
   },
   pages: {

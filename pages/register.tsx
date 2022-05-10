@@ -1,4 +1,5 @@
 import Button from '@/components/Button'
+import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
 import { NextPage } from 'next'
@@ -13,8 +14,8 @@ const SignUpSchema = Yup.object().shape({
     .email('Must be a valid email')
     .max(255)
     .required('Required field'),
-  name: Yup.string().required('Required field').min(1, 'Too short input'),
-  phone: Yup.string().required('Required field'),
+  first_name: Yup.string().required('Required field').min(1, 'Too short input'),
+  last_name: Yup.string().required('Required field').min(1, 'Too short input'),
   password: Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -28,34 +29,50 @@ const SignUpSchema = Yup.object().shape({
 
 interface FormValues {
   email: string
-  name: string
-  phone: string
+  first_name: string
+  last_name: string
   password: string
   confirmPassword?: string
 }
 
+interface Payload extends FormValues {
+  role: string
+}
+
 const initialValues: FormValues = {
   email: '',
-  name: '',
-  phone: '',
+  first_name: '',
+  last_name: '',
   password: '',
   confirmPassword: '',
 }
 
 const Register: NextPage = () => {
-  const handleSubmit = async (values: FormValues) => {
-    delete values.confirmPassword
-    await toast.promise(
-      axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/authentication/registerUser`,
-        values
-      ),
-      {
-        success: 'Регистрация прошла успешно',
-        loading: 'Загрузка',
-        error: (error) => `Ошибка: ${error.response.data.response}`,
-      }
+  useAuth(true)
+
+  const registerUser = async (payload: Payload) => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/users`,
+      payload
     )
+    const result = response.data
+    console.log('RESULT REG', result)
+  }
+
+  const handleSubmit = async (values: FormValues) => {
+    const payload = {
+      first_name: values.first_name,
+      last_name: values.last_name,
+      email: values.email,
+      password: values.password,
+      role: process.env.NEXT_PUBLIC_D_USER as string,
+    }
+    await toast.promise(registerUser(payload), {
+      loading: 'Загрузка...',
+      success: `Пользователь успешно зарегистрирован`,
+      error: (err) =>
+        err.response.data.errors.map((error: any) => error.message + '\n'),
+    })
   }
 
   return (
@@ -101,21 +118,37 @@ const Register: NextPage = () => {
                     </div>
                     <div className="mt-8 content-center">
                       <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
-                        Name
+                        First Name
                       </label>
                       <Field
-                        name="name"
+                        name="first_name"
                         className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
                         type="text"
-                        placeholder="Enter your name"
+                        placeholder="Enter your firstname"
                       />
                       <ErrorMessage
-                        name="name"
+                        name="first_name"
                         component={'div'}
                         className="mt-1 ml-3 text-sm text-red-400"
                       />
                     </div>
                     <div className="mt-8 content-center">
+                      <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                        Last Name
+                      </label>
+                      <Field
+                        name="last_name"
+                        className="w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
+                        type="text"
+                        placeholder="Enter your lastname"
+                      />
+                      <ErrorMessage
+                        name="last_name"
+                        component={'div'}
+                        className="mt-1 ml-3 text-sm text-red-400"
+                      />
+                    </div>
+                    {/* <div className="mt-8 content-center">
                       <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                         Phone
                       </label>
@@ -140,7 +173,7 @@ const Register: NextPage = () => {
                         component={'div'}
                         className="mt-1 ml-3 text-sm text-red-400"
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-8 content-center">
                       <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                         Password
