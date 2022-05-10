@@ -13,7 +13,7 @@ const Card = ({
 }: Word) => {
   return (
     <>
-      <div className="container mx-auto bg-white shadow transition-all duration-300 hover:shadow-lg flex flex-col px-16 py-10 space-y-5 rounded-lg">
+      <div className="container mx-auto bg-white shadow transition-all duration-300 hover:shadow-lg flex flex-col px-10 lg:px-16 py-10 space-y-5 rounded-lg">
         <div className="flex flex-col items-center space-y-6 lg:flex-row lg:space-y-0 lg:space-x-6">
           <div className="flex w-full flex-col space-y-4 lg:w-1/2">
             <h3>{word}</h3>
@@ -39,7 +39,7 @@ const Card = ({
             ))}
           </div>
           <div className="flex w-full justify-center lg:w-1/2 lg:justify-center">
-            <img className='h-80 border rounded-md' src={getImageURL(image.id, 'fit=cover')} alt={image.id} />
+            <img className='h-full md:h-80 border rounded-md' src={getImageURL(image.id, 'fit=cover')} alt={image.id} />
           </div>
         </div>
         <div className="h-1 bg-dark-blue "></div>
