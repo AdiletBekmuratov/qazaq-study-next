@@ -21,25 +21,27 @@ const Vocabulary: NextPage<VocProps> = ({ words }) => {
 
   return (
     <MainWrapper>
-      <section className="container mx-auto flex flex-col space-y-4 px-5 py-10">
-        <ReactSearchAutocomplete<Word>
-          items={words}
-          onSelect={handleOnSelect}
-          fuseOptions={{
-            keys: ['word'],
-          }}
-          resultStringKeyName="word"
-        />
+      <section className='w-full bg-gray-50'>
+        <div className="container mx-auto flex flex-col space-y-4 px-5 py-10">
+          <ReactSearchAutocomplete<Word>
+            items={words}
+            onSelect={handleOnSelect}
+            fuseOptions={{
+              keys: ['word'],
+            }}
+            resultStringKeyName="word"
+          />
 
-        <Card
-          id={word.id}
-          categories={word.categories}
-          image={word.image}
-          meanings={word.meanings}
-          phonetic={word.phonetic}
-          slug={word.slug}
-          word={word.word}
-        />
+          <Card
+            id={word.id}
+            categories={word.categories}
+            image={word.image}
+            meanings={word.meanings}
+            phonetic={word.phonetic}
+            slug={word.slug}
+            word={word.word}
+          />
+        </div>
       </section>
 
       <Footer />
