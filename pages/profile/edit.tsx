@@ -1,215 +1,203 @@
+import Button from '@/components/Button'
 import Footer from '@/components/Footer'
 import MainWrapper from '@/components/MainWrapper'
-import { NextPage } from 'next'
-import Link from 'next/link'
-import React from 'react'
+import getImageURL from '@/helpers/getImageURL'
+import { getCurrentUser, updateGeneralInfo } from '@/helpers/requests'
+import { User } from '@/types/User'
+import axios from 'axios'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { GetServerSideProps, NextPage } from 'next'
+import { getSession, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import React, { useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import { BsUpload } from 'react-icons/bs'
+import { MdDone } from 'react-icons/md'
 
-const ProfileEdit: NextPage = () => {
+interface ProfileProps {
+  currentUser: User
+}
+
+type GeneralInfo = Pick<User, 'first_name' | 'last_name'>
+
+const ProfileEdit: NextPage<ProfileProps> = ({ currentUser }) => {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const [file, setFile] = useState(null)
+  const imagePrevRef = useRef(null)
+
+  const handleSubmit = async (values: GeneralInfo) => {
+    console.log(values)
+    const res = await toast.promise(
+      updateGeneralInfo(values, session!.user.accessToken),
+      {
+        success: 'Профиль обновлён!',
+        loading: 'Загрузка',
+        error: (err) => `Произошла ошибка: ${err.toString()}`,
+      }
+    )
+    router.reload()
+  }
+
+  const updatePhoto = async () => {
+    if (file) {
+      let data = new FormData()
+      // @ts-ignore
+      data.append('file', file, file.name)
+      const response = await toast.promise(
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/files`, data, {
+          headers: {
+            Authorization: `Bearer ${session!.user.accessToken}`,
+          },
+        }),
+        {
+          success: 'Фото профиля загружена!',
+          loading: 'Загрузка',
+          error: (err) => `Произошла ошибка: ${err.toString()}`,
+        }
+      )
+
+      const uploadedImage = response.data
+
+      const data2 = {
+        avatar: uploadedImage.data.id,
+      }
+
+      const resAx = await toast.promise(
+        updateGeneralInfo(data2, session!.user.accessToken),
+        {
+          success: 'Фото профиля обновлена!',
+          loading: 'Загрузка',
+          error: (err) => `Произошла ошибка: ${err.toString()}`,
+        }
+      )
+
+      setFile(null)
+    }
+  }
+
+  const handleImageChange = (file: any) => {
+    setFile(file.target.files[0])
+    // @ts-ignore
+    imagePrevRef.current.src = URL.createObjectURL(file.target.files[0])
+  }
+
   return (
     <MainWrapper>
       <section className="w-full">
-        <div className="container mx-auto grid grid-cols-1 items-center gap-y-10 px-12 py-16 md:px-20 lg:grid-cols-2">
-          <div className="flex flex-col items-center space-x-12 space-y-4 md:flex-row ">
-            <img
-              className="aspect-square w-36 rounded-full"
-              src={'/images/profileAnel.png'}
-            />
-            <div className="">
-              <h3>Anel Amanbekova</h3>
-              <h3 className="text-light-blue">Advanced</h3>
+        <div className="container mx-auto flex flex-col items-center space-y-4 px-5 py-16">
+          <div className="flex w-full flex-1 flex-col items-center justify-center space-y-4 md:flex-row">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <div className="relative aspect-square w-36 rounded-full">
+                <img
+                  className="aspect-square w-36 rounded-full"
+                  ref={imagePrevRef}
+                  src={
+                    getImageURL(
+                      currentUser?.avatar,
+                      'fit=cover&width=150&height=150'
+                    ) ??
+                    getImageURL(
+                      'f7333f36-69bb-4249-b0e2-e82f12c77144',
+                      'fit=cover&width=150&height=150'
+                    )
+                  }
+                />
+                <input
+                  onChange={handleImageChange}
+                  multiple={false}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  id="filePicker"
+                />
+                <label
+                  htmlFor="filePicker"
+                  className="absolute right-0 top-0 rounded-full bg-dark-blue p-3 text-xl font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95"
+                >
+                  <BsUpload />
+                </label>
+                {file && (
+                  <button
+                    onClick={updatePhoto}
+                    className="absolute -right-5 top-12 rounded-full bg-green-500 p-3 text-xl font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <MdDone />
+                  </button>
+                )}
+              </div>
+
+              <div className="flex flex-col justify-center text-center lg:flex-row">
+                <h3>
+                  {currentUser.first_name} {currentUser.last_name}
+                </h3>
+              </div>
             </div>
           </div>
-          <div className="flex items-center justify-center space-x-6 md:justify-end">
-            <Link href={'/profile'}>
-              <a className="ripple rounded-lg border bg-white px-6 py-2.5 text-black hover:text-white md:px-10 ">
-                CANCEL
-              </a>
-            </Link>
-            <Link href={'/profile'}>
-              <a className="ripple rounded-lg border bg-dark-blue px-8 py-2.5 text-white  md:px-14">
-                SAVE
-              </a>
-            </Link>
-          </div>
-        </div>
-        <div className="container mx-auto px-10 md:px-20 lg:px-40">
-          <form action="#" method="POST">
-            <div className="">
-              <div className="bg-white px-4 py-5 sm:p-6">
-                <div className="grid grid-cols-6 gap-6">
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="first-name"
-                      className="block text-lg font-bold text-black"
-                    >
-                      First name
+          <Formik
+            initialValues={
+              {
+                first_name: currentUser.first_name,
+                last_name: currentUser.last_name,
+              } as GeneralInfo
+            }
+            onSubmit={handleSubmit}
+          >
+            {(props) => (
+              <Form className="flex w-full flex-col space-y-6">
+                <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div className="relative w-full">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      First Name
                     </label>
-                    <input
+                    <Field
+                      name="first_name"
+                      className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Жәңгірбай"
+                    />
+                    <ErrorMessage
+                      name="first_name"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
                     />
                   </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="last-name"
-                      className="block text-lg font-bold text-black"
-                    >
-                      Last name
+                  <div className="relative w-full">
+                    <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
+                      Last Name
                     </label>
-                    <input
+                    <Field
+                      name="last_name"
+                      className=" w-full rounded-2xl border-b border-gray-300 px-4 py-2 text-base outline-none focus:shadow"
                       type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Әмірханов"
                     />
-                  </div>
-
-                  <div className="col-span-6 h-px bg-gray-300 "></div>
-
-                  <div className="col-span-6 sm:col-span-4">
-                    <label
-                      htmlFor="email-address"
-                      className="block text-lg font-bold text-black"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="text"
-                      name="email-address"
-                      id="email-address"
-                      autoComplete="email"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 h-px bg-gray-300 "></div>
-
-                  <div className="col-span-6">
-                    <div className="rounded-lg bg-gray-50 py-2 shadow-xl lg:w-2/3">
-                      <div className="m-4">
-                        <div className="flex w-full items-center justify-center">
-                          <label className="flex h-24 w-full flex-col border-4 border-dashed hover:border-gray-300 hover:bg-gray-100">
-                            <div className="flex flex-col items-center justify-center pt-4">
-                              <p className="text-center text-xl tracking-wider text-gray-400 group-hover:text-gray-600">
-                                <span className="text-black">
-                                  {' '}
-                                  Click to upload
-                                </span>{' '}
-                                new <br />
-                                profile photo
-                              </p>
-                            </div>
-                            <input type="file" className="opacity-0" />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-span-6 h-px bg-gray-300"></div>
-                  <div className="col-span-6 sm:col-span-4">
-                    <label
-                      htmlFor="phone-number"
-                      className="block text-lg font-bold text-black"
-                    >
-                      Phone number
-                    </label>
-                    <input
-                      type="text"
-                      name="phone-number"
-                      id="phone-number"
-                      autoComplete="number"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-4">
-                    <label
-                      htmlFor="Address"
-                      className="block text-lg font-bold text-black"
-                    >
-                      Address
-                    </label>
-                    <input
-                      type="text"
-                      name="Address"
-                      id="Address"
-                      autoComplete="Address"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 h-px bg-gray-300 "></div>
-
-                  <h2 className="col-span-6 text-dark-blue">Update Password</h2>
-
-                  <div className="col-span-6 sm:col-span-4">
-                    <label
-                      htmlFor="current-password"
-                      className="block text-lg font-bold text-black"
-                    >
-                      Current Password
-                    </label>
-                    <input
-                      type="text"
-                      name="current-password"
-                      id="current-password"
-                      autoComplete="Current Password"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-4">
-                    <label
-                      htmlFor="new-password"
-                      className="block text-lg font-bold text-black"
-                    >
-                      New Password
-                    </label>
-                    <input
-                      type="text"
-                      name="new-password"
-                      id="new-password"
-                      autoComplete="New Password"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-4">
-                    <label
-                      htmlFor="confirm-new-password"
-                      className="block text-lg font-bold text-black"
-                    >
-                      Confirm New Password
-                    </label>
-                    <input
-                      type="text"
-                      name="confirm-new-password"
-                      id="confirm-new-password"
-                      autoComplete="Confirm New Password"
-                      className="mt-1 block w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    <ErrorMessage
+                      name="last_name"
+                      component={'div'}
+                      className="mt-1 ml-3 text-sm text-red-400"
                     />
                   </div>
                 </div>
-              </div>
-              <div className="mb-5 px-4 py-3 text-left sm:px-6">
-                <Link href={''}>
-                  <a className="ripple rounded-lg border bg-dark-blue px-8 py-2 text-white md:px-14 md:py-3">
-                    UPDATE PASSWORD
-                  </a>
-                </Link>
-              </div>
-            </div>
-          </form>
+                <div className="flex justify-center">
+                  <Button type="submit" className="w-full sm:max-w-xs">
+                    Submit
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </section>
       <Footer />
     </MainWrapper>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+  const currentUser = (await getCurrentUser(session?.user?.accessToken)) as User
+  return { props: { currentUser } }
 }
 
 export default ProfileEdit

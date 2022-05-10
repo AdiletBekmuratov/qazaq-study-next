@@ -15,16 +15,15 @@ export interface LoginData {
 }
 
 export interface User {
-  accessToken: string
-  accessTokenExpires: number
-  refreshToken: string
-  username: string
-  role: string[]
+  avatar?: string
+  last_name?: string
+  first_name?: string
+  email: string
   id: number
 }
 
 export interface Questions {
-  id: number,
-  question: string, 
-  answers: {id:number, answer:string}[] 
+  id: number
+  question: string
+  answers: { id: number; answer: string }[]
 }

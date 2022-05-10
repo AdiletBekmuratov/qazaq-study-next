@@ -5,8 +5,8 @@ import NavLink from './NavLink'
 const Navbar = () => {
   const { data: session } = useSession()
   return (
-    <nav className="fixed top-0 z-40 w-full bg-dark-blue p-5 text-white shadow">
-      <div className="container mx-auto flex flex-wrap items-center justify-between">
+    <nav className="fixed top-0 z-40 w-full bg-dark-blue text-white shadow">
+      <div className="container mx-auto flex flex-wrap items-center justify-between p-5">
         <a href="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-xl font-semibold">
             QStudy

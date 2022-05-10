@@ -8,12 +8,29 @@ export const getCurrentUser = async (accessToken = '') => {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-        withCredentials: true,
       }
     )
     const currentUser = res.data
     return currentUser?.data
   } catch (error) {
     console.log('ERROR CUR USER', error)
+  }
+}
+
+export const updateGeneralInfo = async (data: any, accessToken: string) => {
+  try {
+    const res = await axios.patch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    const currentUser = res.data
+    return currentUser?.data
+  } catch (error) {
+    console.log('ERROR UPD USER', error)
   }
 }

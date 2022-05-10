@@ -12,12 +12,24 @@ interface Props {
   className?: buttonTypes['className']
   type?: buttonTypes['type']
   link?: string
+  backgroundColor?: string
+  textColor?: string
+  rounded?: string
 }
 
 const customClass =
-  'ripple-button flex w-full cursor-pointer justify-center items-center rounded-md overflow-hidden relative bg-dark-blue py-2 px-4 font-semibold tracking-wide text-gray-100 active:scale-95 transition-all'
+  'ripple-button flex cursor-pointer justify-center items-center overflow-hidden relative py-2 px-4 font-semibold tracking-wide active:scale-95 transition-all'
 
-const Button: FC<Props> = ({ children, onClick, className, type, link }) => {
+const Button: FC<Props> = ({
+  children,
+  onClick,
+  className,
+  type,
+  link,
+  backgroundColor = 'bg-dark-blue',
+  textColor = 'text-gray-100',
+  rounded = 'rounded-md',
+}) => {
   const [coords, setCoords] = useState({ x: -1, y: -1 })
   const [isRippling, setIsRippling] = useState(false)
 
@@ -41,7 +53,17 @@ const Button: FC<Props> = ({ children, onClick, className, type, link }) => {
             const rect = node.getBoundingClientRect()
             setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top })
           }}
-          className={customClass + ' ' + className}
+          className={
+            customClass +
+            ' ' +
+            className +
+            ' ' +
+            textColor +
+            ' ' +
+            backgroundColor +
+            ' ' +
+            rounded
+          }
         >
           {isRippling ? (
             <span
@@ -69,7 +91,17 @@ const Button: FC<Props> = ({ children, onClick, className, type, link }) => {
         setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top })
         onClick && onClick(e)
       }}
-      className={customClass + ' ' + className}
+      className={
+        customClass +
+        ' ' +
+        className +
+        ' ' +
+        textColor +
+        ' ' +
+        backgroundColor +
+        ' ' +
+        rounded
+      }
     >
       {isRippling ? (
         <span
