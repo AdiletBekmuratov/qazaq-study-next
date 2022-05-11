@@ -12,6 +12,7 @@ import React from 'react'
 
 interface ProfileProps {
   currentUser: User
+  auth: any
 }
 
 const Profile: NextPage<ProfileProps> = ({ currentUser }) => {
@@ -83,6 +84,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const currentUser = (await getCurrentUser(session?.user?.accessToken)) as User
   const words = await getAllWords(session?.user?.accessToken)
   return { props: { currentUser, words } }
+}
+
+// @ts-ignore
+Profile.auth = {
+  role: 'USER',
 }
 
 export default Profile

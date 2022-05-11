@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   return (
     <MainWrapper>
       <Head>
-        <title>Главная | Qazaq Study</title>
+        <title>Main | Qazaq Study</title>
       </Head>
       <main>
         <section className="relative z-10 w-full">

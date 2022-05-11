@@ -1,9 +1,14 @@
+import useAuth from '@/hooks/useAuth'
 import { signOut, useSession } from 'next-auth/react'
-import React from 'react'
+import React, { useState } from 'react'
 import NavLink from './NavLink'
 
 const Navbar = () => {
   const { data: session } = useSession()
+  const [open, setOpen] = useState<boolean>(false)
+  const handleOpen = () => {
+    setOpen((prev) => !prev)
+  }
   return (
     <nav className="fixed top-0 z-40 w-full bg-dark-blue text-white shadow">
       <div className="container mx-auto flex flex-wrap items-center justify-between p-5">
@@ -14,8 +19,13 @@ const Navbar = () => {
         </a>
         <button
           data-collapse-toggle="mobile-menu"
+          onClick={handleOpen}
           type="button"
-          className="ml-3 inline-flex items-center rounded-lg p-2 text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
+          className={`ml-3 inline-flex items-center rounded-lg active:scale-95 ${
+            !open ? 'border-2 border-white' : 'bg-gray-100'
+          } p-2 text-sm focus:outline-none md:hidden ${
+            open ? 'text-dark-blue' : 'text-white'
+          }`}
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
@@ -45,15 +55,22 @@ const Navbar = () => {
             />
           </svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="mobile-menu">
+        <div
+          className={`${open ? 'block' : 'hidden'} w-full md:block md:w-auto`}
+          id="mobile-menu"
+        >
           <ul className="mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium">
             <NavLink title="Translator" href="/translator" condition={true} />
             <NavLink
               title="Vocabulary Cards"
               href="/vocabulary"
-              condition={true}
+              condition={!!session?.user && !session?.error}
             />
-            <NavLink title="Quiz" href="/quiz" condition={true} />
+            <NavLink
+              title="Quiz"
+              href="/quiz"
+              condition={!!session?.user && !session?.error}
+            />
             <NavLink title="Support" href="/support" condition={true} />
             <NavLink
               title="Profile"
@@ -66,9 +83,13 @@ const Navbar = () => {
               title="Quit"
               onClick={() => signOut({ callbackUrl: '/login' })}
             />
-            <NavLink condition={!session?.user} title="Login" href="/login" />
             <NavLink
-              condition={!session?.user}
+              condition={!session?.user && !session?.error}
+              title="Login"
+              href="/login"
+            />
+            <NavLink
+              condition={!session?.user && !session?.error}
               title="Register"
               href="/register"
             />

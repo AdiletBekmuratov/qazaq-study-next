@@ -6,7 +6,6 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import PhoneInput from 'react-phone-input-2'
 import * as Yup from 'yup'
 
 const SignUpSchema = Yup.object().shape({
@@ -148,32 +147,6 @@ const Register: NextPage = () => {
                         className="mt-1 ml-3 text-sm text-red-400"
                       />
                     </div>
-                    {/* <div className="mt-8 content-center">
-                      <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
-                        Phone
-                      </label>
-                      <Field
-                        name="phone"
-                        inputClass="focus:shadow"
-                        type="text"
-                        placeholder="Enter your phone number"
-                        preferredCountries={['us', 'ru', 'kz']}
-                        country={'kz'}
-                        onChange={(
-                          _: any,
-                          __: any,
-                          ___: any,
-                          formattedValue: any
-                        ) => props.setFieldValue('phone', formattedValue)}
-                        component={PhoneInput}
-                        disableCountryGuess={true}
-                      />
-                      <ErrorMessage
-                        name="phone"
-                        component={'div'}
-                        className="mt-1 ml-3 text-sm text-red-400"
-                      />
-                    </div> */}
                     <div className="mt-8 content-center">
                       <label className="ml-3 text-sm font-bold tracking-wide text-gray-700">
                         Password

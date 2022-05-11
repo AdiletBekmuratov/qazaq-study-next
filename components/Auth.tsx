@@ -17,10 +17,7 @@ export default function Auth({
 
   React.useEffect(() => {
     if (status === 'loading') return
-    if (
-      !session?.user?.roles.includes('ADMIN') &&
-      !session?.user?.roles.includes(role)
-    ) {
+    if (session?.user?.role !== 'ADMIN' && session?.user?.role !== role) {
       router.replace('/')
     }
   }, [session, status])

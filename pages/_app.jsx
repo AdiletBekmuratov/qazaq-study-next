@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, router }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session} refetchInterval={interval}>
-        <span className='filter mix-blend-difference relative z-[99999]'>
+        <span className="relative z-[99999] mix-blend-difference filter">
           <AnimatedCursor color="255, 209, 26" outerSize={30} outerScale={2} />
         </span>
         <Toaster position="top-right" />

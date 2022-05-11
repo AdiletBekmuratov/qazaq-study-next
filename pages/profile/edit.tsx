@@ -207,4 +207,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return { props: { currentUser } }
 }
 
+// @ts-ignore
+ProfileEdit.auth = {
+  role: 'USER',
+}
+
 export default ProfileEdit

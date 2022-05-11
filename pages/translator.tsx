@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer'
 import MainWrapper from '@/components/MainWrapper'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -229,6 +230,9 @@ const Translator: NextPage = () => {
 
   return (
     <MainWrapper>
+      <Head>
+        <title>Translator | Qazaq Study</title>
+      </Head>
       <section className="flex w-full flex-col space-y-8 px-8 py-10 shadow-2xl md:px-20 lg:px-40">
         <p className="text-3xl font-semibold">Cirillyc - Latin Translator</p>
         <div className="rounded-lg border border-gray-300 ">

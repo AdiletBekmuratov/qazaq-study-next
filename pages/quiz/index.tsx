@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import MainWrapper from '@/components/MainWrapper'
 import { Field, Form, Formik } from 'formik'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
 
@@ -132,9 +133,12 @@ function hasValue(obj: Map, key: string, value: string) {
   return obj.hasOwnProperty(key) && obj[key] === value
 }
 
-const quiz: NextPage = () => {
+const Quiz: NextPage = () => {
   return (
     <MainWrapper>
+      <Head>
+        <title>Quiz | Qazaq Study</title>
+      </Head>
       <Formik
         initialValues={{}}
         onSubmit={async (values) => {
@@ -218,4 +222,9 @@ const quiz: NextPage = () => {
   )
 }
 
-export default quiz
+// @ts-ignore
+Quiz.auth = {
+  role: 'USER',
+}
+
+export default Quiz

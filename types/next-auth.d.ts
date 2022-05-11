@@ -8,7 +8,7 @@ declare module 'next-auth' {
       accessTokenExpires: number
       refreshToken: string
       username: string
-      roles: string[]
+      role: string
       id: number
     } & DefaultSession['user']
 
@@ -17,7 +17,7 @@ declare module 'next-auth' {
       accessTokenExpires: number
       refreshToken: string
       username: string
-      roles: string[]
+      role: string
       id: number
     } & DefaultJWT['token']
   }
@@ -30,7 +30,7 @@ declare module 'next-auth/jwt' {
     accessTokenExpires: number
     refreshToken: string
     username: string
-    roles: string[]
+    role: string
     id: number
   }
 }
