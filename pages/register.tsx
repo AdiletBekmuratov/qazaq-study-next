@@ -180,7 +180,7 @@ const Register: NextPage = () => {
                       />
                     </div>
                     <div>
-                      <Button type="submit">Sign up</Button>
+                      <Button className='w-full' type="submit">Sign up</Button>
                     </div>
                     <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
                       <span>Already have an account?</span>

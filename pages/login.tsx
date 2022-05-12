@@ -170,7 +170,7 @@ const Login: NextPage<LoginProps> = ({ csrfToken }) => {
                       </div>
                     </div>
                     <div>
-                      <Button type="submit">Sign in</Button>
+                      <Button className='w-full' type="submit">Sign in</Button>
                     </div>
                     <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
                       <span>Don't have an account?</span>

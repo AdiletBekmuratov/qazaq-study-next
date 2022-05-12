@@ -82,7 +82,7 @@ const Support: NextPage = () => {
                   ></textarea>
                 </div>
                 <div className="md:flex md:items-center">
-                  <Button type="button">Send</Button>
+                  <Button className='w-full' type="button">Send</Button>
                 </div>
               </form>
             </div>

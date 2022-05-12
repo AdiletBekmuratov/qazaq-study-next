@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="container mx-auto flex flex-row space-x-12 px-5 py-16">
           <div className="w-full lg:w-1/2">
             <Link href={"#"}>
-              <a className='text-3xl font-semibold'>
+              <a className='text-xl md:text-3xl font-semibold'>
                 Qazaq Study
               </a>
             </Link>
@@ -19,7 +19,7 @@ const Footer = () => {
           </div>
           <div className="w-full lg:w-1/2 flex justify-end justify-items-center space-x-12 lg:space-x-36">
             <div className="">
-              <h2 className="text-2xl font-medium">
+              <h2 className="text-lg md:text-2xl font-medium pt-1">
                 Sitemap
               </h2>
               <nav className="list-none mt-2">
@@ -38,7 +38,7 @@ const Footer = () => {
               </nav>
             </div>
             <div className="">
-              <h2 className="text-2xl font-medium">
+              <h2 className="text-lg md:text-2xl font-medium pt-1">
                 Contact Us
               </h2>
               <nav className="list-none mt-2">

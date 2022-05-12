@@ -50,7 +50,7 @@ const ContactUs = () => {
                 className="border-1 mb-4 h-36 resize-none rounded-lg border border-gray-200 py-3 px-4 shadow"
               ></textarea>
               <div className="flex flex-row items-center justify-start">
-                <Button type='button'>Send</Button>
+                <Button className='w-full' type='button'>Send</Button>
               </div>
             </form>
           </div>
