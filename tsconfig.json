@@ -42,7 +42,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"pages/api/auth/[...nextauth].js",
-		"pages/_app.jsx"
+		"pages/_app.jsx",
+		"components/Modal.оsx"
 	],
 	"exclude": [
 		"node_modules"

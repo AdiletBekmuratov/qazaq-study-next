@@ -2,7 +2,8 @@ import Button from '@/components/Button'
 import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
+import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
@@ -180,7 +181,9 @@ const Register: NextPage = () => {
                       />
                     </div>
                     <div>
-                      <Button className='w-full' type="submit">Sign up</Button>
+                      <Button className="w-full" type="submit">
+                        Sign up
+                      </Button>
                     </div>
                     <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
                       <span>Already have an account?</span>
@@ -234,6 +237,22 @@ const Register: NextPage = () => {
       </section>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+      props: {},
+    }
+  }
+  return {
+    props: {},
+  }
 }
 
 export default Register

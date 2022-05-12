@@ -21,9 +21,3 @@ export interface User {
   email: string
   id: number
 }
-
-export interface Questions {
-  id: number
-  question: string
-  answers: { id: number; answer: string }[]
-}

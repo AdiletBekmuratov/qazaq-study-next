@@ -1,27 +1,65 @@
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import Button from './Button'
+import Modal from './Modal'
 
 interface CardContent {
-	id: number
-	title: string
-	imageUrl: string
-	description: string
-	total: number
-	score?: number
+  id: number
+  title: string
+  imageUrl?: string
+  description: string
+  total: number
+  score?: number
+  slug: string
+  minScore: number
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setClickedQuiz: React.Dispatch<
+    React.SetStateAction<
+      | {
+          slug?: string | undefined
+          id?: number | undefined
+        }
+      | undefined
+    >
+  >
 }
 
-const QuizCard = ({ id, title, imageUrl, description, total, score }: CardContent) => {
-	return (
-		<Link href={`/quiz/ ${id}`}>
-			<div className='flex flex-col justify-center cursor-pointer bg-white shadow transition-all duration-300 hover:shadow-lg rounded-lg justify-items-center p-3 space-y-5'>
-				<img className='w-full object-cover' src={imageUrl} />
-				<h3>{title}</h3>
-				<p>{description}</p>
-				<h4 className='font-semibold'>Amount of questons: {total}</h4>
-				<h4 className='font-semibold'>Maximum Score: {score}</h4>
-			</div>
-		</Link>
-	)
+const QuizCard = ({
+  id,
+  title,
+  imageUrl,
+  description,
+  total,
+  score,
+  slug,
+  minScore,
+  setModalIsOpen,
+  setClickedQuiz,
+}: CardContent) => {
+  const handleOpen = () => {
+    setClickedQuiz({ id: id, slug: slug })
+    setModalIsOpen(true)
+  }
+  return (
+    <>
+      <div className="flex flex-col justify-center space-y-5 rounded-lg bg-white p-3 shadow transition-all duration-300 hover:shadow-md">
+        {imageUrl && (
+          <img className="h-52 w-full rounded object-cover" src={imageUrl} />
+        )}
+        <h3>{title}</h3>
+        <p>{description}</p>
+        <div>
+          <h4 className="font-semibold">Amount of questions: {total}</h4>
+          <h4 className="font-semibold">Minimum score to pass: {minScore}</h4>
+          <h4 className="font-semibold">
+            Your Maximum Score: {score ? score : '0'}
+          </h4>
+        </div>
+        <Button onClick={handleOpen}>Перейти</Button>
+      </div>
+    </>
+  )
 }
 
 export default QuizCard

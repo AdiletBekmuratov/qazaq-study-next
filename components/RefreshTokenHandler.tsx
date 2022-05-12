@@ -9,9 +9,6 @@ const RefreshTokenHandler: FC<HandlerProps> = ({ setInterval }) => {
   const { data: session } = useSession()
   useEffect(() => {
     if (!!session) {
-      console.log('REF HANDLER', session.expires)
-
-      // We did set the token to be ready to refresh after 23 hours, here we set interval of 23 hours 30 minutes.
       const timeRemaining = Math.round(
         ((session.expires as any) - 3 * 60 * 1000 - Date.now()) / 1000
       )

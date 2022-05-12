@@ -1,19 +1,19 @@
+import Button from '@/components/Button'
+import useAuth from '@/hooks/useAuth'
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik'
 import { GetServerSideProps, NextPage } from 'next'
+import {
+  getCsrfToken,
+  getSession,
+  signIn,
+  SignInResponse,
+} from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ContextType, useState } from 'react'
-import * as Yup from 'yup'
-import {
-  getCsrfToken,
-  signIn,
-  SignInAuthorizationParams,
-  SignInResponse,
-} from 'next-auth/react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
-import Button from '@/components/Button'
-import useAuth from '@/hooks/useAuth'
+import * as Yup from 'yup'
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -170,7 +170,9 @@ const Login: NextPage<LoginProps> = ({ csrfToken }) => {
                       </div>
                     </div>
                     <div>
-                      <Button className='w-full' type="submit">Sign in</Button>
+                      <Button className="w-full" type="submit">
+                        Sign in
+                      </Button>
                     </div>
                     <p className="text-md mt-10 flex flex-col items-center justify-center text-center text-gray-500">
                       <span>Don't have an account?</span>
@@ -192,6 +194,16 @@ const Login: NextPage<LoginProps> = ({ csrfToken }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+      props: {},
+    }
+  }
   return {
     props: {
       csrfToken: await getCsrfToken(context),
