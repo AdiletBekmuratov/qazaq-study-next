@@ -253,7 +253,7 @@
   pointer-events: none;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1300px) {
   .sec-3::after {
     display: none;
   }
