@@ -14,7 +14,7 @@ import React, { useState } from 'react'
 const Quizzes: NextPage<{ quizzes: Quiz[] }> = ({ quizzes }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [clickedQuiz, setClickedQuiz] = useState<
-    { slug?: string; id?: number } | undefined
+    { slug?: string; id?: string } | undefined
   >()
   const router = useRouter()
 

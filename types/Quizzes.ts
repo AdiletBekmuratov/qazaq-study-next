@@ -4,7 +4,7 @@ export interface Option {
 }
 
 export interface Question {
-  id: number
+  id: string
   text: string
   image: { id: string }
   options: Option[]
@@ -13,12 +13,12 @@ export interface Question {
 }
 
 export interface Quiz {
-	id: number
+	id: string
   title: string
   description: string
 	slug: string
 	minScore: number
   image?: { id: string }
   scores: { score?: number }[]
-  questions: { question_id: Question }[]
+  questions: { questions_id: Question }[]
 }

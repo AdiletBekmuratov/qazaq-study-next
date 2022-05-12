@@ -154,6 +154,7 @@ export const getQuizById = async (
     const query = gql`
       query GetQuizById($id: ID!) {
         quizzes_by_id(id: $id) {
+          id
           title
           description
           image {
@@ -161,6 +162,7 @@ export const getQuizById = async (
           }
           questions {
             questions_id {
+              id
               text
               image {
                 id
@@ -175,8 +177,68 @@ export const getQuizById = async (
       }
     `
     const res = await graphQLClient.request(query, variables)
-    return res.quizzes as Quiz[]
+
+    return res.quizzes_by_id as Quiz
   } catch (error) {
     console.log({ error })
+  }
+}
+
+export const getQuizByIdOnlyAnswers = async (
+  variables: { id: string },
+  accessToken?: string
+) => {
+  try {
+    const graphQLClient = new GraphQLClient(
+      `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    const query = gql`
+      query GetQuizById($id: ID!) {
+        quizzes_by_id(id: $id) {
+          id
+          questions {
+            questions_id {
+              id
+              answers {
+                id
+                text
+              }
+            }
+          }
+        }
+      }
+    `
+    const res = await graphQLClient.request(query, variables)
+
+    return res.quizzes_by_id as Quiz
+  } catch (error) {
+    console.log({ error })
+  }
+}
+
+export const addNewScore = async (
+  data: { quiz: string; user: string; score: number },
+  accessToken?: string
+) => {
+  try {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/items/scores`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    )
+
+    return res
+  } catch (error) {
+    console.log(error)
   }
 }

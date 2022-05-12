@@ -1,11 +1,8 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React from 'react'
 import Button from './Button'
-import Modal from './Modal'
 
 interface CardContent {
-  id: number
+  id: string
   title: string
   imageUrl?: string
   description: string
@@ -18,7 +15,7 @@ interface CardContent {
     React.SetStateAction<
       | {
           slug?: string | undefined
-          id?: number | undefined
+          id?: string | undefined
         }
       | undefined
     >
