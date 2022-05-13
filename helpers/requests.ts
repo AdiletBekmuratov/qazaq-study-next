@@ -1,4 +1,4 @@
-import { Quiz } from '@/types/Quizzes'
+import { Achievement, Quiz } from '@/types/Quizzes'
 import { Word } from '@/types/Words'
 import axios from 'axios'
 import { gql, GraphQLClient } from 'graphql-request'
@@ -201,6 +201,13 @@ export const getQuizByIdOnlyAnswers = async (
       query GetQuizById($id: ID!) {
         quizzes_by_id(id: $id) {
           id
+          minScore
+          achievements {
+            id
+            userAchievments {
+              user
+            }
+          }
           questions {
             questions_id {
               id
@@ -240,5 +247,69 @@ export const addNewScore = async (
     return res
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const createUsersAchievement = async (
+  variables: { achievementId: string; userId: string },
+  accessToken?: string
+) => {
+  try {
+    const graphQLClient = new GraphQLClient(
+      `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    const query = gql`
+      mutation CreateUsersAchievement($achievementId: ID!, $userId: String!) {
+        create_userAchievments_item(
+          data: { achievement: { id: $achievementId }, user: $userId }
+        ) {
+          id
+        }
+      }
+    `
+    const res = await graphQLClient.request(query, variables)
+
+    return res.create_userAchievments_item as { id: string }
+  } catch (error) {
+    console.log({ error })
+  }
+}
+
+export const getUsersAchievements = async (accessToken?: string) => {
+  try {
+    const graphQLClient = new GraphQLClient(
+      `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    const query = gql`
+      query {
+	userAchievments(filter: {user: {_eq: "$CURRENT_USER"}}){
+    id
+    achievement{
+      id
+      title
+      description
+      image{
+        id
+      }
+      date_created
+    }
+  }
+}
+    `
+    const res = await graphQLClient.request(query)
+
+    return res.userAchievments as { id: string, achievement: Achievement }[]
+  } catch (error) {
+    console.log({ error })
   }
 }

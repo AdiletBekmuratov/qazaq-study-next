@@ -1,28 +1,34 @@
+import getImageURL from '@/helpers/getImageURL'
+import { toIsoString } from '@/helpers/getFormatDate'
 import React, { FC } from 'react'
 
 interface AchievmentCardProps {
   image?: string
   title?: string
   description?: string
-  created_date?: string
+  date_created?: string
 }
 
 const AchievmentCard: FC<AchievmentCardProps> = ({
   image,
   title,
   description,
-  created_date,
+  date_created,
 }) => {
+	console.log({date_created});
+	
   return (
     <div className="flex flex-col items-center justify-center space-y-1 rounded bg-white p-3 text-center shadow transition-all duration-300 hover:shadow-md">
       <img
-        src="https://i.pinimg.com/originals/c7/80/5e/c7805ee9aa1a16baaa33a7b1be2f220e.png"
-        alt="achive"
-        className="aspect-square w-full object-cover"
+        src={getImageURL(image, 'fit=cover')}
+        alt={image}
+        className="aspect-square w-full rounded-full object-cover"
       />
-      <h4>Title</h4>
-      <p className="text-sm">Пройти первый тест</p>
-      <small>{new Date().toLocaleString('kk-KK')}</small>
+      <h4 className="leading-tight">{title}</h4>
+      <p className="text-sm">{description}</p>
+      <small>{
+			// @ts-ignore
+			toIsoString(new Date(date_created))}</small>
     </div>
   )
 }

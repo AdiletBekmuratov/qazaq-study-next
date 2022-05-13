@@ -3,7 +3,8 @@ import Button from '@/components/Button'
 import Footer from '@/components/Footer'
 import MainWrapper from '@/components/MainWrapper'
 import getImageURL from '@/helpers/getImageURL'
-import { getAllWords, getCurrentUser } from '@/helpers/requests'
+import { getCurrentUser, getUsersAchievements } from '@/helpers/requests'
+import { Achievement } from '@/types/Quizzes'
 import { User } from '@/types/User'
 import { GetServerSideProps, NextPage } from 'next'
 import { getSession } from 'next-auth/react'
@@ -12,10 +13,10 @@ import React from 'react'
 
 interface ProfileProps {
   currentUser: User
-  auth: any
+  myAchievements: { id: string; achievement: Achievement }[]
 }
 
-const Profile: NextPage<ProfileProps> = ({ currentUser }) => {
+const Profile: NextPage<ProfileProps> = ({ currentUser, myAchievements }) => {
   return (
     <>
       <Head>
@@ -57,20 +58,15 @@ const Profile: NextPage<ProfileProps> = ({ currentUser }) => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8">
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
-            <AchievmentCard />
+            {myAchievements.map((achieve) => (
+              <AchievmentCard
+                key={achieve.id}
+                title={achieve.achievement.title}
+                description={achieve.achievement.description}
+                image={achieve.achievement.image.id}
+								date_created={achieve.achievement.date_created}
+              />
+            ))}
           </div>
         </section>
         <Footer />
@@ -82,8 +78,8 @@ const Profile: NextPage<ProfileProps> = ({ currentUser }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   const currentUser = (await getCurrentUser(session?.user?.accessToken)) as User
-  const words = await getAllWords(session?.user?.accessToken)
-  return { props: { currentUser, words } }
+  const myAchievements = await getUsersAchievements(session?.user?.accessToken)
+  return { props: { currentUser, myAchievements } }
 }
 
 // @ts-ignore

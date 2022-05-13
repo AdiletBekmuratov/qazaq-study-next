@@ -1,5 +1,6 @@
 import {
   addNewScore,
+  createUsersAchievement,
   getCurrentUser,
   getQuizByIdOnlyAnswers,
 } from '@/helpers/requests'
@@ -47,7 +48,23 @@ const getSomething = async (req: NextApiRequest, res: NextApiResponse) => {
     any,
     any
   >
-  console.log({ result })
+
+  if (quizAnswers.minScore <= correct) {
+    if (
+      quizAnswers.achievements[0].userAchievments.find(
+        (x) => x.user === userId
+      ) === undefined
+    ) {
+      const addAchieveResponse = await createUsersAchievement(
+        {
+          achievementId: quizAnswers.achievements[0].id,
+          userId: userId,
+        },
+        access
+      )
+      console.log(addAchieveResponse)
+    }
+  }
 
   if (result.statusText === 'OK') {
     res.status(200).send({ message: correct })

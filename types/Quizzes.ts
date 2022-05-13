@@ -13,12 +13,22 @@ export interface Question {
 }
 
 export interface Quiz {
-	id: string
+  id: string
   title: string
   description: string
-	slug: string
-	minScore: number
+  slug: string
+  minScore: number
   image?: { id: string }
   scores: { score?: number }[]
   questions: { questions_id: Question }[]
+  achievements: Achievement[]
+}
+
+export interface Achievement {
+  id: string
+  title: string
+  description: string
+  image: { id: string }
+  date_created: string
+  userAchievments: { user: string }[]
 }
