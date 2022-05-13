@@ -292,23 +292,68 @@ export const getUsersAchievements = async (accessToken?: string) => {
     )
     const query = gql`
       query {
-	userAchievments(filter: {user: {_eq: "$CURRENT_USER"}}){
-    id
-    achievement{
-      id
-      title
-      description
-      image{
-        id
+        userAchievments(filter: { user: { _eq: "$CURRENT_USER" } }) {
+          id
+          date_created
+          achievement {
+            id
+            title
+            description
+            image {
+              id
+            }
+          }
+        }
       }
-      date_created
-    }
-  }
-}
     `
     const res = await graphQLClient.request(query)
 
-    return res.userAchievments as { id: string, achievement: Achievement }[]
+    return res.userAchievments as { id: string; achievement: Achievement }[]
+  } catch (error) {
+    console.log({ error })
+  }
+}
+
+export const getScoresByQuizId = async (
+  variables: { id: number },
+  accessToken?: string
+) => {
+  try {
+    const graphQLClient = new GraphQLClient(
+      `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    const query = gql`
+      query GetResults($id: Float!) {
+        scores(
+          filter: { user: { id: { _eq: "$CURRENT_USER" } } }
+          sort: ["-date_created"]
+        ) {
+          id
+          date_created
+          score
+          quiz(filter: { id: { _eq: $id } }) {
+            title
+            questions {
+              id
+            }
+          }
+        }
+      }
+    `
+
+    const res = await graphQLClient.request(query, variables)
+
+    return res.scores as {
+      id: string
+      date_created: string
+      score: number
+      quiz: Quiz
+    }[]
   } catch (error) {
     console.log({ error })
   }

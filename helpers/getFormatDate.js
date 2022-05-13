@@ -3,7 +3,8 @@ export default function getFormatDate(date) {
 }
 
 export function toIsoString(date) {
-  var tzo = -date.getTimezoneOffset(),
+  let timeOff = -new Date().getTimezoneOffset()
+  let tzo = -date.getTimezoneOffset(),
     dif = tzo >= 0 ? '+' : '-',
     pad = function (num) {
       return (num < 10 ? '0' : '') + num
@@ -16,7 +17,7 @@ export function toIsoString(date) {
     '-' +
     pad(date.getDate()) +
     ', ' +
-    pad(date.getHours() + 6) +
+    pad(date.getHours() + timeOff / 60) +
     ':' +
     pad(date.getMinutes()) +
     ':' +

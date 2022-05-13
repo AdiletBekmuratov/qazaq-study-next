@@ -2,6 +2,7 @@ import Button from '@/components/Button'
 import Footer from '@/components/Footer'
 import MainWrapper from '@/components/MainWrapper'
 import Modal from '@/components/Modal'
+import getImageURL from '@/helpers/getImageURL'
 import { getQuizById } from '@/helpers/requests'
 import { Quiz } from '@/types/Quizzes'
 import axios from 'axios'
@@ -42,7 +43,7 @@ const Quiz: NextPage<{ quiz: Quiz }> = ({ quiz }) => {
       }
     )
     if (res.status === 200) {
-      router.push('/quizResult')
+      router.push(`/quiz/result?id=${quiz.id}`)
     }
   }
 
@@ -89,14 +90,24 @@ const Quiz: NextPage<{ quiz: Quiz }> = ({ quiz }) => {
                 </div>
                 <div className="col-span-12 sm:col-span-8 lg:col-span-9 xl:col-span-10">
                   <div className="flex flex-col space-y-4">
-                    {quiz.questions.map(({ questions_id }) => (
+                    {quiz.questions.map(({ questions_id }, index) => (
                       <div
                         id={questions_id.id}
                         className="container mx-auto flex flex-col space-y-3 rounded-md bg-white p-6 shadow transition-all duration-300 hover:shadow-lg md:p-10"
                         key={questions_id.id}
                       >
-                        <h4>Question {questions_id.id}</h4>
+                        <h4>Question {index + 1}</h4>
                         <p>{questions_id.text}</p>
+                        {questions_id.image && (
+                          <img
+                            src={getImageURL(
+                              questions_id.image.id,
+                              'fit=cover'
+                            )}
+                            alt={questions_id.image.id}
+                            className="aspect-video w-1/2 rounded object-contain"
+                          />
+                        )}
                         {questions_id.options.map((option) => (
                           <div key={option.id}>
                             <label className="flex flex-row space-x-2">

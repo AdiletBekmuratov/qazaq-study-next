@@ -146,11 +146,12 @@ const Home: NextPage = () => {
                   Dowload our <span className="text-dark-blue">QazaqStudy</span>{' '}
                   mobile app and improve your knowlege no matter where and when.
                 </p>
-                <Link href={'#'}>
-                  <a>
-                    <img className="w-40 lg:w-full" src="/images/google.svg" />
-                  </a>
-                </Link>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_ASSET_URL}/ed3b9bec-f542-494d-9507-0649720bf34b?download`}
+                  target="_blank"
+                >
+                  <Button>DOWNLOAD</Button>
+                </a>
               </div>
               <div className="hidden md:block">
                 <img className="w-32 lg:w-44" src="/images/adilet2.png" />

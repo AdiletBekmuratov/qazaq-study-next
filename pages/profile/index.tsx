@@ -13,7 +13,11 @@ import React from 'react'
 
 interface ProfileProps {
   currentUser: User
-  myAchievements: { id: string; achievement: Achievement }[]
+  myAchievements: {
+    id: string
+    date_created: string
+    achievement: Achievement
+  }[]
 }
 
 const Profile: NextPage<ProfileProps> = ({ currentUser, myAchievements }) => {
@@ -64,7 +68,7 @@ const Profile: NextPage<ProfileProps> = ({ currentUser, myAchievements }) => {
                 title={achieve.achievement.title}
                 description={achieve.achievement.description}
                 image={achieve.achievement.image.id}
-								date_created={achieve.achievement.date_created}
+                date_created={achieve.date_created}
               />
             ))}
           </div>
